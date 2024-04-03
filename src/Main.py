@@ -39,5 +39,26 @@ def binarizar_imagenes(imagenes_grises):
 
     return imagenes_binarias
 
+def detectar_bordes(imagenes_binarias):
+    imagenes_bordes=[]
+    for img in imagenes_binarias:
+        img_bordes = cv2.Canny(img, 100, 200) 
+        st.image(img_bordes, width=200)
+        imagenes_bordes.append(img_bordes)
+    return imagenes_bordes
+
+def detectar_contornos(imagenes_bordes):
+    lista_contornos=[]
+    for img in imagenes_bordes:
+        contornos, _ = cv2.findContours(img, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+        lista_contornos.append(contornos)
+    return lista_contornos
+
 imagenes, imagenes_grises=cargar_imagenes()
 imagenes_binarias=binarizar_imagenes(imagenes_grises)
+imagenes_bordes=detectar_bordes(imagenes_binarias)
+lista_contornos=detectar_contornos(imagenes_bordes)
+
+for i in range(len(imagenes_grises)):
+    imagen_con_contorno = cv2.drawContours(cv2.cvtColor(imagenes_grises[i], cv2.COLOR_GRAY2RGB), lista_contornos[i], -1, (0, 255, 0), 7)
+    st.image(imagen_con_contorno, width=200)
