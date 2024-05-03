@@ -45,6 +45,34 @@ def binarizar_imagenes(imagenes_grises):
 
     return imagenes_binarias
 
+def binarizar_imagenes_gotas(imagenes_rgb):
+    imagenes_binarias_gotas=[]
+    for img in imagenes_rgb:
+        img=cv2.cvtColor(img,cv2.COLOR_BGRA2GRAY)
+        _, binary_img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
+        st.image(binary_img, width=200)
+        imagenes_binarias_gotas.append(binary_img)
+
+    return imagenes_binarias_gotas
+
+def aplicar_mascaras(imagenes_color, imagenes_binarias):
+    imagenes_recortadas=[]
+    for i in range(len(imagenes_color)):
+        img = imagenes_color[i]
+        mask = imagenes_binarias[i]
+
+        mask_inv = cv2.bitwise_not(mask)
+        result = cv2.bitwise_and(img, img, mask=mask_inv)
+        result = img.copy()
+        result = cv2.cvtColor(result, cv2.COLOR_BGR2BGRA)
+        result[:, :, 3] = mask_inv
+        
+        st.image(result, width=200)
+        imagenes_recortadas.append(result)
+
+    return imagenes_recortadas
+
+
 def detectar_bordes(imagenes_binarias):
     imagenes_bordes=[]
     for img in imagenes_binarias:
@@ -68,8 +96,27 @@ def convertir_tipo_datos(img1, img2):
             img2 = cv2.convertScaleAbs(img2)
 
     return img1, img2
+
+
+def rgb_cambiar(imagenes_color):
+    imagenes_rgb=[]
+    for img in imagenes_color:
+        b,g,r,a=cv2.split(img)
+        new_r = r
+        new_g = np.clip(g * (801.4), 0, 255).astype(np.uint8)
+        new_b = b
+
+        new_image = cv2.merge((new_b, new_g, new_r,a))
+        st.image(new_image, width=200)
+        imagenes_rgb.append(new_image)
+    return imagenes_rgb
+
 imagenes, imagenes_grises, imagenes_color=cargar_imagenes()
 imagenes_binarias=binarizar_imagenes(imagenes_grises)
+imagenes_recortadas=aplicar_mascaras(imagenes_color, imagenes_binarias)
+imagenes_rgb=rgb_cambiar(imagenes_recortadas)
+imagenes_binarias_gotas=binarizar_imagenes_gotas(imagenes_rgb)
+imagenes_recortadas_gotas=aplicar_mascaras(imagenes_rgb, imagenes_binarias_gotas)
 imagenes_bordes=detectar_bordes(imagenes_binarias)
 lista_contornos=detectar_contornos(imagenes_bordes)
 
@@ -94,3 +141,16 @@ imagen_combinada = cv2.addWeighted(imagenes_grises[0], 0.5, imagen_alineada, 0.5
 
 st.image(imagen_combinada, width=200)
 
+def adjust_rgb(image, r_value, g_value, b_value):
+    adjusted_image = np.copy(image)
+    adjusted_image[:,:,0] += b_value  
+    adjusted_image[:,:,1] += g_value  
+    adjusted_image[:,:,2] += r_value  
+    return np.clip(adjusted_image, 0, 255).astype(np.uint8)
+
+r_value = st.slider('Red', 0, 1000, 0)
+g_value = st.slider('Green', 0, 1000, 0)
+b_value = st.slider('Blue', 0, 1000, 0)
+
+adjusted_img = adjust_rgb(imagenes_color[1], r_value, g_value, b_value)
+st.image(adjusted_img, channels='BGR')
