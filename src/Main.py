@@ -5,36 +5,36 @@ import numpy as np
 def cargar_imagenes():
     st.title('Cargar Imágenes')
 
+    archivo_cargado = st.file_uploader("Selecciona una o más imágenes", type=["jpg", "jpeg", "png", "tiff", "tif"], accept_multiple_files=True)
+    if archivo_cargado is not None:
+        imagenes, imagenes_grises, imagenes_color=procesar_imagenes_subidas(archivo_cargado)
+
+        return imagenes, imagenes_grises, imagenes_color
+    
+def procesar_imagenes_subidas(archivo_cargado):
     imagenes = []
     imagenes_grises =[]
     imagenes_color =[]
 
-    archivo_cargado = st.file_uploader("Selecciona una o más imágenes", type=["jpg", "jpeg", "png", "tiff", "tif"], accept_multiple_files=True)
-
-    if archivo_cargado is not None:
-        if isinstance(archivo_cargado, list):
-            for img in archivo_cargado:
-                imagenes.append((img))
-                img_bytes = img.read()
-                img_gris = cv2.imdecode(np.frombuffer(img_bytes, np.uint8), cv2.IMREAD_GRAYSCALE)
-                img_color = cv2.imdecode(np.frombuffer(img_bytes, np.uint8), cv2.IMREAD_COLOR)
-                imagenes_color.append((img_color))
-                imagenes_grises.append((img_gris))
-        else:
-            imagenes.append((archivo_cargado))
-            img_bytes = archivo_cargado.read()
+    if isinstance(archivo_cargado, list):
+        for img in archivo_cargado:
+            imagenes.append((img))
+            img_bytes = img.read()
             img_gris = cv2.imdecode(np.frombuffer(img_bytes, np.uint8), cv2.IMREAD_GRAYSCALE)
             img_color = cv2.imdecode(np.frombuffer(img_bytes, np.uint8), cv2.IMREAD_COLOR)
-            img_gris= cv2.imread(archivo_cargado.img.uploaded_url)
-            img_color = cv2.imread(archivo_cargado.img.uploaded_url)
             imagenes_color.append((img_color))
             imagenes_grises.append((img_gris))
-        
-        col1, col2= st.columns(2)
-        with col1:
-            st.image(imagenes_color[0])
-        with col2:
-            st.image(imagenes_color[1])
+    else:
+        imagenes.append((archivo_cargado))
+        img_bytes = archivo_cargado.read()
+        img_gris = cv2.imdecode(np.frombuffer(img_bytes, np.uint8), cv2.IMREAD_GRAYSCALE)
+        img_color = cv2.imdecode(np.frombuffer(img_bytes, np.uint8), cv2.IMREAD_COLOR)
+        img_gris= cv2.imread(archivo_cargado.img.uploaded_url)
+        img_color = cv2.imread(archivo_cargado.img.uploaded_url)
+        imagenes_color.append((img_color))
+        imagenes_grises.append((img_gris))
+    
+    mostrar_imagenes(imagenes_color)
 
     return imagenes, imagenes_grises, imagenes_color
 
@@ -44,13 +44,30 @@ def binarizar_imagenes(imagenes_grises):
         _, binary_img = cv2.threshold(img, 70, 255, cv2.THRESH_BINARY)
         imagenes_binarias.append(binary_img)
 
-    col1, col2 = st.columns(2)
-    with col1:
-        st.image(imagenes_binarias[0])
-    with col2:
-        st.image(imagenes_binarias[1])
+    num_imagenes = len(imagenes_binarias)
+    cols = st.columns(num_imagenes)
+
+    for i in range(num_imagenes):
+        with cols[i]:
+            st.image(imagenes_binarias[i])
+            porcentaje = calcular_porcentaje_hoja(imagenes_binarias[i])
+            st.markdown(f"Porcentaje de hoja: {porcentaje}%")
 
     return imagenes_binarias
+
+def mostrar_imagenes(imagenes):
+    num_imagenes = len(imagenes)
+    cols = st.columns(num_imagenes)
+
+    for i in range(num_imagenes):
+        with cols[i]:
+            st.image(imagenes[i])
+            
+def calcular_porcentaje_hoja(imagen_binaria):
+    total_pixeles = imagen_binaria.shape[0] * imagen_binaria.shape[1]
+    pixeles_negros = total_pixeles - cv2.countNonZero(imagen_binaria)
+    porcentaje= round((pixeles_negros / total_pixeles) * 100, 2)
+    return porcentaje
 
 def binarizar_imagenes_gotas(imagenes_rgb):
     imagenes_binarias_gotas=[]
@@ -59,11 +76,7 @@ def binarizar_imagenes_gotas(imagenes_rgb):
         _, binary_img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
         imagenes_binarias_gotas.append(binary_img)
 
-    col1, col2 = st.columns(2)
-    with col1:
-        st.image(imagenes_binarias_gotas[0])
-    with col2:
-        st.image(imagenes_binarias_gotas[1])
+    mostrar_imagenes(imagenes_binarias_gotas)
 
     return imagenes_binarias_gotas
 
@@ -81,11 +94,7 @@ def aplicar_mascaras(imagenes_color, imagenes_binarias):
 
         imagenes_recortadas.append(result)
 
-    col1, col2 = st.columns(2)
-    with col1:
-        st.image(imagenes_recortadas[0])
-    with col2:
-        st.image(imagenes_recortadas[1])
+    mostrar_imagenes(imagenes_recortadas)
 
     return imagenes_recortadas
 
@@ -96,11 +105,7 @@ def detectar_bordes(imagenes_binarias):
         img_bordes = cv2.Canny(img, 100, 200) 
         imagenes_bordes.append(img_bordes)
 
-        col1, col2 = st.columns(2)
-        with col1:
-            st.image(imagenes_bordes[0])
-        with col2:
-            st.image(imagenes_bordes[1])
+    mostrar_imagenes(imagenes_bordes)
 
     return imagenes_bordes
 
@@ -134,11 +139,7 @@ def rgb_cambiar(imagenes_color):
         new_image = cv2.merge((new_b, new_g, new_r))
         imagenes_rgb.append(new_image)
 
-    col1, col2 = st.columns(2)
-    with col1:
-        st.image(imagenes_rgb[0])
-    with col2:
-        st.image(imagenes_rgb[1])
+    mostrar_imagenes(imagenes_rgb)
 
     return imagenes_rgb
 
@@ -149,29 +150,29 @@ imagenes_rgb=rgb_cambiar(imagenes_color)
 imagenes_binarias_gotas=binarizar_imagenes_gotas(imagenes_rgb)
 imagenes_recortadas_gotas=aplicar_mascaras(imagenes_rgb, imagenes_binarias_gotas)
 
-# imagenes_bordes=detectar_bordes(imagenes_binarias)
-# lista_contornos=detectar_contornos(imagenes_bordes)
+imagenes_bordes=detectar_bordes(imagenes_binarias)
+lista_contornos=detectar_contornos(imagenes_bordes)
 
 
-# for i in range(len(imagenes_grises)):
-#     imagen_con_contorno = cv2.drawContours(cv2.cvtColor(imagenes_grises[i], cv2.COLOR_GRAY2RGB), lista_contornos[i], -1, (0, 255, 0), 7)
-#     st.image(imagen_con_contorno, width=200)
+for i in range(len(imagenes_grises)):
+    imagen_con_contorno = cv2.drawContours(cv2.cvtColor(imagenes_grises[i], cv2.COLOR_GRAY2RGB), lista_contornos[i], -1, (0, 255, 0), 7)
+    st.image(imagen_con_contorno, width=200)
 
-# for i in range(len(imagenes_grises)):
-#     contornos = lista_contornos[i]
+for i in range(len(imagenes_grises)):
+    contornos = lista_contornos[i]
 
-# def alinear_imagenes(imagen_referencia, imagen_a_alinear):
-#     warp_matrix = np.eye(2, 3, dtype=np.float32)
-#     _, warp_matrix = cv2.findTransformECC(imagen_referencia, imagen_a_alinear, warp_matrix, cv2.MOTION_TRANSLATION)
-#     imagen_a_alinear_alineada = cv2.warpAffine(imagen_a_alinear, warp_matrix, (imagen_a_alinear.shape[1], imagen_a_alinear.shape[0]), flags=cv2.INTER_LINEAR + cv2.WARP_INVERSE_MAP)
+def alinear_imagenes(imagen_referencia, imagen_a_alinear):
+    warp_matrix = np.eye(2, 3, dtype=np.float32)
+    _, warp_matrix = cv2.findTransformECC(imagen_referencia, imagen_a_alinear, warp_matrix, cv2.MOTION_TRANSLATION)
+    imagen_a_alinear_alineada = cv2.warpAffine(imagen_a_alinear, warp_matrix, (imagen_a_alinear.shape[1], imagen_a_alinear.shape[0]), flags=cv2.INTER_LINEAR + cv2.WARP_INVERSE_MAP)
     
-#     return imagen_a_alinear_alineada
+    return imagen_a_alinear_alineada
 
-# imagen_alineada = alinear_imagenes(imagenes_grises[0], imagenes_grises[1])
+imagen_alineada = alinear_imagenes(imagenes_grises[0], imagenes_grises[1])
 
-# imagen_combinada = cv2.addWeighted(imagenes_grises[0], 0.5, imagen_alineada, 0.5, 0)
+imagen_combinada = cv2.addWeighted(imagenes_grises[0], 0.5, imagen_alineada, 0.5, 0)
 
-# st.image(imagen_combinada, width=200)
+st.image(imagen_combinada, width=200)
 
 
 def adjust_rgb(image, r_value, g_value, b_value):
