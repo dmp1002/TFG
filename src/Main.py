@@ -74,6 +74,12 @@ def binarizar_imagenes_gotas(imagenes_rgb):
     for img in imagenes_rgb:
         img=cv2.cvtColor(img,cv2.COLOR_BGRA2GRAY)
         _, binary_img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
+        binary_img = cv2.bitwise_not(binary_img)
+        se = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+        binary_img = cv2.dilate(binary_img, se, iterations=1)
+        binary_img = cv2.morphologyEx(binary_img, cv2.MORPH_CLOSE, se)
+        binary_img = cv2.erode(binary_img, se, iterations=1)
+        contours, _ = cv2.findContours(binary_img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         imagenes_binarias_gotas.append(binary_img)
 
     mostrar_imagenes(imagenes_binarias_gotas)
@@ -130,11 +136,11 @@ def rgb_cambiar(imagenes_color):
     imagenes_rgb=[]
     for img in imagenes_color:
         b,g,r=cv2.split(img)
-        #new_r= new_r = np.clip(r* (639.1/255), 0, 255).astype(np.uint8)
-        new_r = r
-        new_g = np.clip(g * (801.4), 0, 255).astype(np.uint8)
-        #new_b= new_b = np.clip(b* (459.2/255), 0, 255).astype(np.uint8)
-        new_b = b
+        new_r= new_r = np.clip(r*(639.1), 55, 155).astype(np.uint8)
+        #new_r = r
+        new_g = np.clip(g*(801.4), 55, 155).astype(np.uint8)
+        new_b= np.clip(b*(459.2), 55, 155).astype(np.uint8)
+        #new_b = b
 
         new_image = cv2.merge((new_b, new_g, new_r))
         imagenes_rgb.append(new_image)
