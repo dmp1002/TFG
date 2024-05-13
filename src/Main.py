@@ -194,3 +194,4 @@ b_value = st.slider('Blue', 0, 1000, 595)
 
 adjusted_img = adjust_rgb(imagenes_color[1], r_value, g_value, b_value)
 st.image(adjusted_img, channels='BGR', width=500)
+

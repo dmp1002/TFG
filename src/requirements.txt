@@ -3,4 +3,4 @@
 streamlit==1.32.2
 opencv-python==4.9.0.80
 numpy==1.22.0
-tensorflow==2.13.0
+spectral==0.23.1
