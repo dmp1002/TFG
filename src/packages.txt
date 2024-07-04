@@ -1,2 +1,2 @@
-apt-get install libgl1
-apt-get install libtk8.6
+libgl1
+libtk8.6
