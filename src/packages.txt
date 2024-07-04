@@ -1,2 +1,1 @@
-libgl1
-libtk8.6
+tk8.6-dev
