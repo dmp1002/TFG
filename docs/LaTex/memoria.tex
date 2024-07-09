@@ -179,7 +179,7 @@
       \multicolumn{#3}{r}{\small\sl continúa en la página siguiente}\\
     }
     \tablelasttail{
-      \hline
+      \hlinege
     }
     \bottomcaption{#1}
     \rowcolors {2}{gray!35}{}
@@ -355,7 +355,7 @@
 \newcommand{\nombre}{David Merinero Porres} %%% cambio de comando
 
 % Datos de portada
-\title{título del TFG}
+\title{VitiScan: Detección de gotas de producto antifúngico en hojas de vid}
 \author{\nombre}
 \tutor{Carlos Cambra Baseca}
 \date{\today}
@@ -374,11 +374,10 @@
 
 \noindent\includegraphics[width=\textwidth]{cabecera}\vspace{1cm}
 
-\noindent D. Carlos Cambra Baseca, profesor del departamento de nombre departamento, área de nombre área.
 
 \noindent Expone:
 
-\noindent Que el alumno D. \nombre, con DNI dni, ha realizado el Trabajo final de Grado en Ingeniería Informática titulado título de TFG. 
+\noindent Que el alumno D. \nombre, con DNI 71312373E, ha realizado el Trabajo final de Grado en Ingeniería Informática titulado título de TFG. 
 
 \noindent Y que dicho trabajo ha sido realizado por el alumno bajo la dirección del que suscribe, en virtud de lo cual se autoriza su presentación y defensa.
 
@@ -422,16 +421,19 @@ D. nombre co-tutor
 % Abstract en castellano
 \renewcommand*\abstractname{Resumen}
 \begin{abstract}
-  Se dispone de una imágenes de laboratorio de hojas de viñedo con diferentes aplicaciones de tratamientos en gotas. 
-  Los tratamientos son principalmente de cobre, un tratamiento muy común usado en los viñedos contra cierto tipo de enfermedades.
-  
-  Lo que se pretende es procesar las imágenes y para conseguir saber cuánto porcentaje de hoja se consigue cubrir con la aplicación de estos tratamientos.
-  
+
+Se dispone de una imágenes hiperespectrales de unas hojas de viñedo con diferentes aplicaciones de tratamientos en gotas. Los tratamientos son principalmente de cobre, un tratamiento muy común usado en los viñedos contra cierto tipo de enfermedades.
+Lo que se pretende es procesar las imágenes y para conseguir saber cuánto porcentaje de hoja se consigue cubrir con la aplicación de estos tratamientos y reducir así el uso de fitosanitarios en los viñedos.
+Para ello se ha creado una aplicación capaz de procesar estas imágenes hiperespectrales y determinar de esa imagen que superficie corresponde a hoja y cuál a gota. Después de aplicar este procesado, que se podrá realizar tanto de forma individual como por lotes, se podrá visualizar el resultado y compararlo con la imagen original en un editor.
+Este editor permite visualizar diferentes capas, pudiendo seleccionar cuáles quieres ver y su nivel de transparencia. Las capas que se irán cargando serán normalmente una imagen original de la hoja del viñedo y la imagen procesada de esa misma hoja. Este editor te permite verificar que el resultado del procesamiento ha sido correcto o incorrecto. En caso negativo se volvería a procesar la imagen, pero esta vez cambiando los parámetros según se desee.
+Tanto las imágenes procesadas como las imágenes creadas en el editor tienen la opción de ser almacenadas. Los datos resultantes del procesado también se almacenan.
+Las imágenes con las que se trabaja han sido realizadas por investigadores en el marco del proyecto DIG4VITIS.
+
 \end{abstract}
 
 \renewcommand*\abstractname{Descriptores}
 \begin{abstract}
-Palabras separadas por comas que identifiquen el contenido del proyecto Ej: servidor web, buscador de vuelos, android \ldots
+Imágenes hiperespectrales, Streamlit, Aplicación Web, Procesamiento de Imágenes, Binarización, Python, OpenCV\ldots
 \end{abstract}
 
 \clearpage
@@ -439,12 +441,17 @@ Palabras separadas por comas que identifiquen el contenido del proyecto Ej: serv
 % Abstract en inglés
 \renewcommand*\abstractname{Abstract}
 \begin{abstract}
-A \textbf{brief} presentation of the topic addressed in the project.
+There are hyperspectral images of vineyard leaves with different applications of antifungal treatments in drops. The treatments are mainly copper and sulfur, a very common treatment used in vineyards against certain types of diseases.
+The aim is to process the images and to know how much percentage of the leaf can be covered with the application of these treatments and thus reduce the use of phytosanitary products in the vineyards.
+For this, an application has been created capable of processing these hyperspectral images and determining from that image which surface corresponds to a leaf and which to a drop. After applying this processing, which can be done either individually or in batches, the result can be viewed and compared with the original image in an editor.
+This editor allows you to view different layers, being able to select which ones you want to see and their level of transparency. The layers that will be loaded will normally be an original image of the vineyard leaf and the processed image of that same leaf. This editor allows you to verify that the processing result has been correct or incorrect. If not, the image would be processed again, but this time changing the parameters as desired.
+Both processed images and images created in the editor have the option to be stored. The data resulting from processing is also stored.
+The images we work with have been made by researchers within the framework of the DIG4VITIS project.
 \end{abstract}
 
 \renewcommand*\abstractname{Keywords}
 \begin{abstract}
-keywords separated by commas.
+Hyperspectral images, Streamlit, Web Application, Image Processing, Binarization, Python, OpenCV\ldots
 \end{abstract}
 
 \clearpage

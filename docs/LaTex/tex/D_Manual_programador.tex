@@ -1,11 +1,161 @@
 \apendice{Documentación técnica de programación}
 
 \section{Introducción}
+En esta sección se explicará la estructura de directorios y archivos que componen el proyecto. También se enseñará a crear el entorno de desarrollo que necesita la aplicación en el manual del programador. Además, se detallará paso a paso cómo compilar, instalar y ejecutar la aplicación en diferentes sistemas operativos y utilizando diferentes métodos.
 
 \section{Estructura de directorios}
+El código fuente del proyecto se encuentra dentro de la carpeta \verb|/src|.
+
+\subsection{src/}
+En la carpeta src se encuentran una serie de ficheros:
+\begin{itemize}
+    \item \verb|bandas.xml|: Este archivo .xml contiene los valores predeterminados de bandas que toma el programa.
+    \item \verb|estilos.css|: Este archivo .css contiene una serie de estilos utilizados en la aplicación.
+    \item \verb|vitiscan.py|: En este archivo se encuentra el código fuente del proyecto.  
+    \item \verb|requirements.txt|: Este archivo contiene las dependencias necesarias a instalar para poder compilar y ejecutar la aplicación.
+    \item \verb|Dockerfile|: Este archivo es necesario para poder desplegar la aplicación en un contenedor Docker.
+\end{itemize}
+
+\subsection{src/.streamlit}
+Esta carpeta contiene el fichero de configuración \verb|config.toml|
 
 \section{Manual del programador}
+En esta sección se explica cómo crear el entorno de desarrollo que necesita esta aplicación.
 
+\subsection{Instalación de Python}
+
+\subsubsection{GNU/Linux (Ubuntu)}
+Para la instalación del entorno de desarrollo en GNU/Linux se ha decidido utilizar la distribución de Ubuntu, ya que es la distribución de Linux más popular.~\cite{ubuntu}
+
+Lo primero que debemos hacer es instalar Python 3.11, para ello introduciremos  el siguiente comando en la consola:
+\begin{verbatim}
+    sudo apt install python3.11
+\end{verbatim}
+Para verificar la instalación se puede usar este comando:
+\begin{verbatim}
+    python3 --version
+\end{verbatim}
+Nos debería mostrar la versión de Python que hay instalada.
+
+\subsubsection{Windows}
+En el caso de Windows, debemos ir a la página oficial de Python y descargar el ejecutable de la versión 3.11.5 (\href{https://www.python.org/downloads/release/python-3115/}{enlace}).
+Para verificar la instalación se puede usar este comando:
+\begin{verbatim}
+    python --version
+\end{verbatim}
+Nos debería mostrar la versión de Python que hay instalada.
+
+\subsection{Creación y activación del entorno virtual}
+Se recomienda utilizar un entorno virtual a la hora de crear un entorno de desarrollo en Python, ya que nos permite instalar las dependencias de forma independiente para cada proyecto.
+
+\subsubsection{GNU/Linux (Ubuntu)}
+Para crear el entorno virtual en Linux introduciremos el siguiente comando en la consola:
+\begin{verbatim}
+    python3 -m venv (nombre del entorno virtual)
+\end{verbatim}
+
+Posteriormente pasaremos a activar el entorno virtual introduciendo el siguiente comando en la consola:
+\begin{verbatim}
+    source (nombre del entorno virtual)/bin/activate
+\end{verbatim}
+
+Y con esto ya tendríamos todo listo para instalar las dependencias del proyecto.
+
+\subsubsection{Windows}
+Para crear el entorno virtual en Windows introduciremos el siguiente comando en la consola:
+\begin{verbatim}
+    python -m venv (nombre del entorno virtual)
+\end{verbatim}
+
+Posteriormente pasaremos a activar el entorno virtual introduciendo el siguiente comando en la consola:
+\begin{verbatim}
+    (nombre del entorno virtual)/Scripts/activate
+\end{verbatim}
+
+Y con esto ya tendríamos todo listo para instalar las dependencias del proyecto.
+
+\subsection{Instalación de dependencias}
+Esta sección es igual para los dos sistemas operativos por lo que procedemos a unificarlo. Para instalar las dependencias del proyecto hay que utilizar el siguiente comando en la consola:
+\begin{verbatim}
+    pip install -r requirements.txt
+\end{verbatim}
+
+Una vez hecho todo esto, ya tendríamos el entorno de desarrollo en funcionamiento. Ya se podría tanto modificar la aplicación y como ejecutar el proyecto en modo local, lo cuál se detalla en el siguiente apartado.
+
+\label{sec:compilacion}
 \section{Compilación, instalación y ejecución del proyecto}
+El proyecto se puede ejecutar de varias maneras, que se procederán  a explicar a continuación. El código fuente se puede descargar del \href{https://github.com/dmp1002/TFG}{repositorio de GitHub} del proyecto. 
+
+De todas formas se recomienda usar siguiente el comando, pero únicamente si se tiene el cliente de git instalado en el sistema:
+\begin{verbatim}
+    git clone https://github.com/dmp1002/TFG.git
+\end{verbatim}
+Este comando se deberá ejecutar en la ruta del entorno virtual creado previamente.
+
+\subsection{Ejecución en local}
+Suponiendo que se han realizado todos los pasos previamente explicados en el manual del programador, la ejecución en local no tiene ninguna dificultad.
+
+Se debe ir a la ruta /src/ del proyecto y una vez allí ejecutar este comando en la consola:
+\begin{verbatim}
+    streamlit run vitiscan.py
+\end{verbatim}
+
+\subsection{Ejecución con Docker}
+En este apartado se explica como desplegar la aplicación y cómo ejecutarla utilizando el software de creación de contenedores Docker.
+
+\subsubsection{Instalación de Docker}
+La instalación de Docker explicará únicamente para el sistema operativo Windows.
+
+Lo primero de todo es instalar el Windows Subsystem for Linux, una funcionalidad de Windows que permite ejecutar distribuciones de Linux sin tener que usar una máquina virtual. Para instalarlo sólo hay que poner este comando en la consola Powershell.
+\begin{verbatim}
+    powershell wsl --install
+\end{verbatim}
+
+Una vez instalado te pedirá reiniciar. Al volver a encender el ordenador se abrirá una consola que te pedirá crear un usuario y contraseña para la version de Ubuntu que se ha instalado.
+
+Antes de instalar Docker, debemos asegurarnos que en las características de Windows estén activadas dos opciones:
+\begin{enumerate}
+    \item El subsistema de Windows para Linux.
+    \item La plataforma de máquina virtual.
+\end{enumerate}
+
+Una vez cumplidos estos requisitos, se pasa a descargar el instalador de Docker desde el siguiente enlace:
+
+\href{https://docs.docker.com/desktop/install/windows-install/}{https://docs.docker.com/desktop/install/windows-install/}
+
+Ya sólo falta ejecutarlo y una vez finalice la instalación reinciar el sistema, entonces ya estará listo para usarse.
+
+\subsubsection{Construcción del contenedor Docker}
+Para construir un contenedor Docker sólo necesitamos ir a la ruta donde tenemos instalado el proyecto y allí ejecutar este comando en la consola:
+\begin{verbatim}
+    docker build -t nombrecontenedor .
+\end{verbatim}
+
+Entonces se nos habrá creado el contenedor Docker donde podremos ejecutar el proyecto.
+En nuestro caso lo llamaremos vitiscan para evitar confusiones.
+
+\subsubsection{Ejecución del contenedor Docker}
+Para ejecutar este contenedor se puede hacer por consola o directamente desde la interfaz del programa. Se recomienda hacerlo por comando, ya que es más sencillo. Sólo hay que ejecutar el siguiente comando en la misma ruta donde se haya creado el contenedor:
+\begin{verbatim}
+    docker run -p 8501:8501 nombrecontenedor
+\end{verbatim}
+
+Nosotros pondremos vitiscan para evitar confusiones.
+Finalmente, se deberá abrir un navegador y acceder al siguiente enlace:
+\href{http://localhost:8501/}{http://localhost:8501/}
+
+En este proyecto se usa el puerto por defecto 8501, ya que así se ha configurado previamente en el fichero Dockerfile del proyecto.
+
+\subsubsection{Exportación del contenedor Docker}
+Con este comando se puede exportar el contenedor creado a una imagen Docker comprimida con extensión.tar con el siguiente comando:
+
+\begin{verbatim}
+    docker save -o nombrecontenedor.tar nombrecontenedor
+\end{verbatim}
+
+
+Así exportamos el contenedor actual a una imagen Docker comprimida .tar que se podrá cargar posteriormente en otro equipo y así poder ser ejecutada.
+Nosotros llamaremos vitiscan tan a la imagen con al contenedor para evitar confusiones.
 
 \section{Pruebas del sistema}
+Aunque no se han llevado a cabo pruebas automatizadas para verificar el programa, se han realizado diferentes pruebas para asegurar que todas las funcionalidades implementadas se ejecutan correctamente.

@@ -1,7 +1,80 @@
 \capitulo{5}{Aspectos relevantes del desarrollo del proyecto}
 
-Este apartado pretende recoger los aspectos más interesantes del desarrollo del proyecto, comentados por los autores del mismo.
-Debe incluir desde la exposición del ciclo de vida utilizado, hasta los detalles de mayor relevancia de las fases de análisis, diseño e implementación.
-Se busca que no sea una mera operación de copiar y pegar diagramas y extractos del código fuente, sino que realmente se justifiquen los caminos de solución que se han tomado, especialmente aquellos que no sean triviales.
-Puede ser el lugar más adecuado para documentar los aspectos más interesantes del diseño y de la implementación, con un mayor hincapié en aspectos tales como el tipo de arquitectura elegido, los índices de las tablas de la base de datos, normalización y desnormalización, distribución en ficheros3, reglas de negocio dentro de las bases de datos (EDVHV GH GDWRV DFWLYDV), aspectos de desarrollo relacionados con el WWW...
-Este apartado, debe convertirse en el resumen de la experiencia práctica del proyecto, y por sí mismo justifica que la memoria se convierta en un documento útil, fuente de referencia para los autores, los tutores y futuros alumnos.
+\section{Primeros pasos del proyecto}
+Como en todo proyecto, el resultado final puede variar mucho respecto a las primeras ideas que se van teniendo. En este proyecto pasó algo por el estilo. Se partió de la idea de utilizar Streamlit como base para desarrollar una aplicación web y se pensó en la librería \textit{OpenCV} para el procesado de imágenes. Siempre se tuvo en mente las imágenes hiperespectrales, pero se comenzó a trabajar con unas imágenes de ciertas bandas de estas donde se apreciaban mejor las gotas. Estas imágenes tenían aplicados unos valores en los canales RGB que potenciaban aún más el contraste entre las gotas y la hoja. Entonces se empezó el desarrollo de la aplicación con estas imágenes en formato .tiff.
+
+Durante las primeras semanas se desarrolló un prototipo, que me ayudó a familiarizarme con las herramientas que ofrecen tanto OpenCV como Streamlit. En esta primera aproximación se empezó a trabajar con las binarizaciones para detectar la hoja, la búsqueda de bordes, aplicar mapas de color, etc.
+
+Todo esto se aplicaba sobre una imagen en formato .tiff que se subía a la aplicación y se le aplicaban las diferentes transformaciones una tras otra pudiendo ver el resultado que se obtenía en cada caso.
+Gracias a este trabajo tan visual con cada cambio que hacía podía ir viendo los cambios que sucedían en la imagen y poder decidir que técnica o herramienta me ayudaba más a llegar al objetivo. Tras llegar al punto de conseguir eliminar el fondo de la imagen y permitir cambiar los colores de la imagen con unas bandas que permitían cambiar los canales RGB se decidió hacer un cambio radical al proyecto.
+
+\imagen{prototipo}{Captura del prototipo.}{.8}
+
+Se celebró una reunión a principios de Mayo donde se llegó a la conclusión que era mejor trabajar directamente con las imágenes hiperespectrales, poder extraer una banda, y tras los procesamientos de trinarizar ser capaces de determinar qué era hoja, que era gota y qué era fondo. También se decidió crear dos pestañas diferentes, una para realizar la trinarización y otra para visualizar los resultados en una especie de editor por capas tipo "Photoshop" que permitiera comparar el resultado obtenido respecto a la foto original cambiando la transparencia. 
+
+Esto supuso un antes y un después en el desarrollo de esta aplicación, porque ya se estaba hablando de trabajar con imágenes hiperespectrales, procesarlas y guardar sus resultados, y además, de crear un editor para visualizar los resultados. Una vez que se especificaron bien el diseño y diferentes funcionalidades del proyecto ya se pudo empezar a trabajar de forma más firme y segura.
+
+
+
+
+\section{Metodología Scrum}
+
+Para la realización del proyecto se ha seguido la metodolgía Scrum, un modelo de gestión de proyectos ágil. Con esta metodología se van realizando sucesivos Sprints, tras los cuales se hace una reunión donde se valora lo que se ha hecho hasta la fecha y se fijan nuevos objetivos a realizar. La duración de estos Sprints ha variado en función de la tarea a realizar o la disponibilidad tiempo en la agenda. Estos Sprints han tenido una duración desde una semana hasta unos 15 días.
+
+\imagen{zube}{Tablero del Sprint Final con las issues pendientes.}{1}
+
+Para la planificación de estos Sprints se ha usado el servicio Zube, dónde se han ido creando estos Sprints con un milestone de GitHub asociado y con la creación de las issues para cada uno de ellos.
+
+Adicionalmente se ha usado un tablero Kanban en el día a día, donde se podía ver las tareas pendientes, en desarrollo o finalizadas de ese Sprint. Esta funcionalidad también viene incluida en Zube.
+
+
+\section{Estructura del proyecto con \textit{Hydralit}}
+Una vez que se planteó una aplicación con diferentes pestañas, empecé a barajar las opciones que tenía para implementarlo. Finalmente, opté por la librería \textit{Hydralit}, que te permite implementar una barra de navegación con diferentes pestañas y está integrado con Streamlit. Esta librería añade además algunas funcionalidades extras como barras de progreso, animaciones de carga, widgets de información, etc.
+
+\imagen{hydralit_navbar}{Ejemplo de barra de navegación de Hydralit.}{1}
+
+Cada pestaña de la barra de navegación es, de facto, una aplicación diferente, por lo que en este proyecto contamos con tres aplicaciones diferentes dentro de la principal. Esto supone tener que guardar algunos datos y estados para que se guarden al cambiar entre una pestaña y otra, ya que sino se eliminarían al ejecutar otra aplicación. Para ello, se han utilizado unos estados de sesión (\verb|st.session_state|), es decir, unas variables que almacenan la información mientras se ejecuta la aplicación principal. Luego está la opción de exportar los resultados, que te guarda los resultados de forma local.
+
+\section{Procesado de imágenes hiperespectrales}
+
+Para poder realizar la trinarización correctamente se han debido realizar varias transformaciones y procesados a las imágenes hiperespectrales. Para empezar como hemos dicho previamente se debe extraer una banda de la imagen hiperespectral para trabajar con ella. Esta banda la debe elegir el usuario, tanto la de detectar la hoja, como la de detectar la gota. Una vez elegidas las bandas se procede a la binarización de esas imágenes. Ya en este paso se debe realizar una normalización para pasar los valores decimales de la banda a valores del 0 al 255, para ser capaces de visualizarlos. Esa dos binarizaciones no dejan de ser máscaras de 1 y 0, por lo que se comparan y se añaden los colores en función del valor que tengan ambas máscaras píxel por píxel.
+
+\imagen{trinarizacion}{Fragmento de código encargado de la trinarización.}{1}
+
+Después de tener la imagen trinarizada con los colores negro(fondo), verde(hoja) y rojo(gotas), se procede a eliminar el ruido que hay en la imagen. Para ello, primero se aplican unas transformaciones de dilatación, rellenado y reducción. Con esto se consigue rellenar las gotas que no estuvieran cerradas. 
+
+\imagen{morfologicas}{Fragmento de código encargado de las transformaciones morfológicas.}{1}
+
+La otra transformación que se hace es eliminar aquellas regiones de gota que sean más pequeñas o más grandes de un valor dado, ya que conocemos el tamaño de las gotas.
+
+\imagen{regiones}{Fragmento de código encargado de eliminar regiones fuera del rango.}{1}
+
+
+Gracias a todas estas transformaciones se obtiene una imagen trinarizada bastante precisa, al haber escogido las bandas donde mejor se ven las gotas y haber eliminado el ruido de la hoja, ya que al ser irregular es más difícil de discriminar entre gota u hoja.
+
+\section{Ficheros resultantes}
+Este proyecto permite exportar los resultados al disco local, para poder utilizar posteriormente los datos que se han conseguido extraer de las imágenes hiperespectrales.
+
+\imagen{pestanas_app}{Pestañas disponibles en la aplicación.}{.75}
+
+Pasamos a ver pestaña por pestaña qué datos o imágenes se pueden exportar:
+ 
+\subsection{Pestaña \textit{Visualizar}}
+En la pestaña \textit{Visualizar}, tras elegir las diferentes capas y sus transparencias, se da la opción de guardar la imagen resultante. Esta imagen tiene la misma resolución que las imágenes originales que se han subido y se guarda en formato .png.
+
+\imagen{visu}{Ejemplo de imagen resultante tras la edición por capas, tras fusionar una imagen a color de la hoja con una imagen trinarizada de la misma.}{.5}
+
+\subsection{Pestaña \textit{Trinarizar}}
+En la pestaña \textit{Trinarizar}, tras seleccionar las bandas y el rango se obtiene una imagen con tres colores diferentes. Esta imagen representa la trinarización, con el fondo de negro, la hoja de verde y las gotas que se han detectado en la hoja, de rojo. Otra información se obtiene tras realizar la trinarización son los píxeles de hoja y los píxeles de gota que hay. También se muestran unos porcentajes, el del total de hoja respecto a la imagen y el del total de gotas respecto a la hoja.
+
+\imagen{tripor}{Captura del resultado de aplicar la trinarización, se observa la imagen trinarizada y los porcentajes.}{.6}
+
+Finalmente se da la opción de guardarlos resultados, que son: la imagen trinarizada en formato .png, el archivo .csv con el número de píxeles y los porcentajes y otro archivo .csv que almacena la información de cada píxel de forma codificada. La codificación de la trinarización es esta: 00 corresponde a fondo, 01 corresponde a hoja y 10 corresponde a gota.
+
+\imagen{csv}{Captura con algunos de los valores del .csv correspondiente a la trinarización de los píxeles.}{.5}
+
+\subsection{Pestaña \textit{Trinarizar Por Lotes}}
+Por último, en esta pestaña se trinarizan todas las imágenes que hay en un directorio. Para ello se selecciona una carpeta de origen y una de destino donde guardar los ficheros resultantes. En este caso, se ha optado por sólamente guardar la imagen trinarizada en formato .png de cada imagen hiperespectral en la carpeta destino, sin crear ningún archivo .csv como en el paso anterior. Este modo nos permite aplicar la trinarización de forma más rápida y posteriormente poder visualizar los resultados para cada hoja en la pestaña \textit{Visualizar}.
+
+
+\imagen{lotes}{Captura del resultado de aplicar la trinarización por lotes, se aprecian varias imágenes trinarizadas en una carpeta.}{1}

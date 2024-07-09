@@ -319,7 +319,7 @@ def trinarizar():
             '%': [round(num_pixeles_hoja / total_pixeles * 100, 2),
                   round(num_pixeles_gotas / num_pixeles_hoja * 100, 2) if num_pixeles_hoja != 0 else 0],
         })
-
+        st.write(df)
         _, buffer_imagen = cv2.imencode('.png', cv2.cvtColor(trinarizada, cv2.COLOR_RGB2BGR))
         imagen_bytes = buffer_imagen.tobytes()
 
@@ -406,11 +406,10 @@ def trinarizar():
                     with col2:
                         nombre = st.session_state.nombre
                         generar_datos_csv(trinarizada, nombre_hyper, nombre)
-
-                    if st.session_state.trinarizada is not None and st.button("Cargar trinarizada"):
-                        fecha = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                        st.session_state.trinarizadas_cargadas[(nombre_hyper, fecha)] = trinarizada
-                        st.rerun()
+                        if st.session_state.trinarizada is not None and st.button("Cargar trinarizada"):
+                            fecha = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                            st.session_state.trinarizadas_cargadas[(nombre_hyper, fecha)] = trinarizada
+                            st.rerun()
 
         elif len(archivos_subidos) > 2:
             st.error("Sólo debes subir dos archivos, el .bil y el .bil.hdr de la misma imagen.")

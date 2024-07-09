@@ -1,11 +1,101 @@
 \apendice{Especificación de diseño}
 
 \section{Introducción}
+En este apartado se explicará qué datos se usan en la aplicación, su diseño arquitectónico y diferentes diagramas sobre el funcionamiento de la aplicación.
 
 \section{Diseño de datos}
+En esta aplicación no se han usado bases de datos, los datos con los que se trabaja los carga el usuario cada vez que la ejecuta. Lo que sí se ha utilizado son los llamados estados de sesión (\verb|st.session_state|). Estos estados de sesión permiten almacenar datos mientras se está ejecutando la aplicación, lo cuál es necesario para que funcione correctamente al cambiar de pestaña. Estos son estados de sesión que utiliza la aplicación:
+\begin{itemize}
+    \item \textbf{lista\_capas}: Lista que almacena las diferentes capas que se podrán mostrar en la pestaña \textit{Visualizar}.
+    \item \textbf{trinarizada}: Variable que almacena la imagen trinarizada que se ha creado en la pestaña \textit{Trinarizar}.
+    \item \textbf{trinarizadas\_cargadas}: Diccionario que almacena las trinarizadas que se han cargado para poderlas elegir como capa en la pestaña \textit{Visualizar}.
+\end{itemize}
 
 \section{Diseño procedimental}
+Se van a mostrar algunos diagramas que representan acciones que se siguen en la aplicación. El primer caso a tratar el cuando se añade una capa al visualizador.
+
+\imagen{visuml}{Diagrama de añadir capa al Visualizador.}{1}
+
+Otro caso que se va representar es el proceso de subir una imagen hiperespectral a la pestaña trinarizar.
+
+\imagen{trinauml}{Diagrama de trinarizar una imagen.}{1}
+
+Y así se podrían hacer diagramas de todos los casos de uso y acciones que se llevan a cabo en el programa.
 
 \section{Diseño arquitectónico}
+En este apartado se van a mostrar las estructuras que usa la aplicación web desarrollada en este proyecto.
 
+\subsection{Modelo-Vista-Controlador}
+El proyecto software utiliza el patrón de diseño Modelo-Vista-Controlador~\cite{mvc}, aunque no de manera perfecta. Pero aún así podemos diferenciar en el código elementos que se desarrollan esas funciones diferentes.
 
+\subsubsection{Modelo}
+En este caso, el Modelo estaría representado por estas funciones ya que modifican los datos, ya sea procesando las imágenes hiperespectrales o  almacenándolos en una lista. Las funciones son:
+\begin{itemize}
+    \item procesar\_hyperespectral()
+    \item procesar\_imagen()
+    \item procesar\_trinarizada()
+    \item guardar\_capa()
+\end{itemize}
+
+\subsubsection{Vista}
+La Vista estaría representada por las secciones de código que se encargan de la interfaz de usuario y la presentación de la información, como:
+\begin{itemize}
+    \item La tabla de porcentajes que se crea en la pestaña Trinarizar.
+    \item Las imágenes que se muestran en la pestaña Visualizar o Trinarizar.
+\end{itemize}
+
+\subsubsection{Controlador}
+El Controlador sería la parte que enlaza el Modelo y la Vista, manejando los eventos y las interacciones del usuario. En este caso, el controlador estaría representado por:
+\begin{itemize}
+    \item Los campos de texto y sliders que permiten la introducción de  los valores que se utilizan para procesar las imágenes.
+    \item Los botones que desencadenan alguna acción, como descargar una imagen.
+\end{itemize}
+
+\imagen{mvc}{Esquema del modelo MVC.}{.75}
+
+\subsection{Frontend-Backend}
+
+El código claramente separa las responsabilidades entre el frontend y el backend. El frontend se enfoca en la interacción con el usuario, mientras que el backend se encarga de la lógica de procesamiento de las imágenes hiperespectrales.
+
+\subsubsection{Frontend}
+La aplicación Streamlit actúa como el frontend, proporcionando una interfaz interactiva para que los usuarios carguen y procesen imágenes. El frontend se encarga de la interacción con el usuario, la presentación de los datos y la gestión del estado de la aplicación.
+
+\subsubsection{Backend}
+Las funciones de procesamiento de imágenes, como procesar\_hyperespectral(), procesar\_imagen() y procesar\_trinarizada(), representan el backend. El backend se encarga de la lógica de procesamiento de imágenes, utilizando bibliotecas como OpenCV y Spectral para realizar operaciones como la extracción de bandas espectrales, la normalización o las sucesivas binarizaciones.
+
+Esta separación entre frontend y backend permite una mejor organización del código, facilitando la modularidad, el mantenimiento y el posterior desarrollo de nuevas funcionalidades.
+
+\section{Guía de estilo}
+En este apartado se van a detallar los elementos que componen la guía de estilo de la aplicación.
+
+\subsection{Colores}
+Estos son los diferentes colores que se han escogido para el estlio de la aplicación. Como se puede ver, se usa un verde de color primario, un fondo de color gris oscuro, un gris claro para el segundo color del fondo y el texto va en color blanco.Estos datos van almacenados en el fichero config.toml, que usa Streamlit para cargar las diferentes configuraciones.
+
+\imagen{colores}{Colores utilizados en la aplicación.}{.9}
+
+\subsection{Tipografía}
+En este proyecto se ha decidido usar una fuente de tipo Sans Serif, ya que se usa en muchos programas y aplicaciones y es una fuente bastante legible.
+
+\imagen{tipografia}{Tipo de letra escogido para la aplicación.}{.9}
+
+\subsubsection{Iconografía}
+Se han utilizado emojis para identificar de forma visual la acción que efectúa cada botón. En algunos casos, el emoji va acompañado de texto para explicar en más detalle la acción del botón.
+
+\imagen{emoji}{Ejemplo de botón con texto más un emoji.}{.4}
+
+\subsection{Nombre}
+Para la elección del nombre se pensó utilizar palabras como Vitis (viñedo en latín), Trinarizar, Visualizar, Scan (escanear en inglés), Lab (abreviatura de laboratorio) o Drop (gota en inglés).
+
+Los candidatos propuestos fueron:
+\begin{itemize}
+    \item {TriVitis}
+    \item {VitiScan}
+    \item {VitisLab}
+    \item {VitisDropScan}
+\end{itemize}
+
+Finalmente, se eligió VitiScan como nombre de la aplicación. Los motivos de esta decisión fue porque sonaba bien, era corto, con la S se fusionaban las palabras y sirve como descripción de la funcionalidad del proyecto.
+
+\subsection{Logotipo}
+Para el logotipo se ha elegido un cubo con una hoja de viña, respresentando así dos conceptos claves en este proyecto, las imágenes hiperespectrales o hipercúbicas y las hojas de vid con las que se trabaja.
+\imagen{logo}{Logotipo escogido para la aplicación.}{.5}

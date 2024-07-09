@@ -1,13 +1,187 @@
 \apendice{Plan de Proyecto Software}
 
 \section{Introducción}
+En este apartado se va a analizar la planificación temporal y se va a estudiar la viabilidad económica y legal del proyecto.
 
 \section{Planificación temporal}
+Para la planficación temporal se han utilizado los Sprints de la metodología Scrum. Antes de empezar cada Sprint es necesario realizar una reunión para decidir la duración del mismo, el objetivo del mismo y las tareas que se van a llevar a cabo para cumplirlo. Una vez transcurrido ese tiempo se vuelve a celebrar una reunión y se actualizan los objetivos y tareas en función de lo realizado en el Sprint anterior. Y así sucesivamente hasta finalizar el desarrollo del proyecto software.
+
+\subsection{Sprints}
+Este apartado contiene los diferentes Sprints con las tareas que se han ido realizando en cada uno.
+
+\subsubsection{Sprint Inicial}
+\textbf{14/03/24 - 17/04/24}
+\begin{itemize}
+    \item Subir plantilla de la documentación a GitHub.
+    \item Crear el fichero Python.
+    \item Registro en Overleaf.
+    \item Registro en Zube.
+    \item Buscar información sobre Streamlit.
+    \item Crear un prototipo de la aplicación.
+    \item Añadir más funcionalidades al prototipo.
+    \item Buscar información sobre el tratamiento de imágenes con OpenCV.
+    \item Implementar las transformaciones a las imágenes.
+\end{itemize}
+
+\subsubsection{Sprint 2}
+\textbf{18/04/24 - 10/05/24}
+\begin{itemize}
+    \item Añadir contenido inicial a la memoria.
+    \item Cambiar canales RGB de las imágenes.
+    \item Eliminar fondo de las imágenes.
+    \item Determinar el porcentaje de la superficie de la hoja.
+    \item Detectar el borde de las gotas.
+    \item Determinar el porcentaje de la superficie de las gotas respecto a la hoja.
+\end{itemize}
+
+\subsubsection{Sprint 3}
+\textbf{11/05/24 - 20/05/24}
+\begin{itemize}
+    \item Descargar imágenes hiperespectrales.
+    \item Buscar información sobre las imágenes hiperespectrales y cómo trabajar con ellas.
+    \item Crear método para cargar imágenes hiperespectrales.
+    \item Crear método para visualizar las diferentes capas de la imagen hiperespectrales.
+    \item Añadir documentación sobre las imágenes hiperespectrales.
+\end{itemize}
+
+\subsubsection{Sprint 4}
+\textbf{21/05/24 - 28/05/24}
+\begin{itemize}
+    \item Crear pestaña de trinarización.
+    \item Crear pestaña de visualización..
+\end{itemize}
+
+\subsubsection{Sprint 5}
+\textbf{29/05/24 - 06/06/24}
+\begin{itemize}
+    \item Buscar librería de python para visualizar imágenes y poder editar parámetros.
+    \item Poner la opción de elegir bandas en la pestaña Trinarizar.
+    \item Mostrar porcentajes y guardarlos en un fichero .csv en la pestaña Trinarizar.
+    \item Cambiar disposición de elementos en ambas pestañas.
+    \item Cambiar el aspecto de los widgets de subir archivos y convertirlos en un botón.
+    \item Desactivar la animación de carga de Hydralit.
+    \item Crear el botón "Añadir Capas" en una ventana emergente.
+\end{itemize}
+
+\subsubsection{Sprint 6}
+\textbf{07/06/24 - 28/06/24}
+\begin{itemize}
+    \item Añadir aspectos teóricos y herramientas utilizadas a la memoria.
+\end{itemize}
+
+\subsubsection{Sprint 7}
+\textbf{29/06/24 - 03/07/24}
+\begin{itemize}
+    \item Implementar en la pestaña Visualizar el editor de imágenes con las capas.
+    \item Carga de datos por defecto por fichero en la pestaña Trinarizar.
+    \item Añadir información sobre el proyecto y su instalación a los 
+    \item Crear la pestaña de Trinarizar por capas.
+    anexos.
+    \item Añadir transformaciones a la imagen trinarizada para eliminar ruido.
+    \item Creación del fichero estilos.css.
+
+\end{itemize}
+
+\subsubsection{Sprint Final}
+\textbf{04/07/24 - 09/07/24}
+\begin{itemize}
+    \item Terminar el resto apartados de la documentación.
+    \item Desplegar la página web.
+    \item Documentación interna del código.
+\end{itemize}
 
 \section{Estudio de viabilidad}
+En este apartado se va realizar un análisis de la viabilidad del proyecto, teniendo en cuenta tanto el apartado económico, como el legal. 
 
 \subsection{Viabilidad económica}
+Antes de comenzar el desarrollo un proyecto software, es necesario hacer un cálculo de los gastos y de los posibles beneficios que nos vaya a aportar. Una vez calculados estos datos se podrá discernir si el proyecto es viable o no (desde un punto de vista puramente económico).
+En los siguientes apartados se van a detallar los costes que supondrá el desarrollo de este proyecto. 
+
+\subsubsection{Coste de Hardware}
+El hardware utilizado para la realización de este proyecto ha sido un ordenador portátil y un ratón inalámbrico. 
+\begin{itemize}
+    \item Ordenador portátil MSI: 1200€
+    \item Ratón inalámbrico Logitech: 50€
+\end{itemize}
+Se va a suponer una amortización a 5 años, por lo que el coste anual para el portátil sería de 1200€/5= 240€ y el del ratón sería de 50€/5=10€.
+
+\subsubsection{Coste de Software}
+El único software de pago que se ha utilizado en este proyecto es el sistema operativo del ordenador portátil, Windows 10 Pro.
+\begin{itemize}
+    \item Windows 10 Pro: 200€
+\end{itemize}
+Se va a suponer una amortización a 5 años, por lo que el coste anual para el software, Windows 10 Pro en este caso sería de 200€/5=40€.
+
+\subsubsection{Coste de Personal}
+Aquí vamos a considerar que estoy contratado por una empresa para la realización de este proyecto. Partiendo de esta base, se va a realizar una aproximación de los costes que les supondría contratar a un programador junior.
+\begin{itemize}
+    \item Sueldo anual de programador junior: 22000€
+\end{itemize}
+se va a suponer que se reparte el sueldo en 14 pagas y que se ha trabajado a media jornada, por lo que sería un sueldo mensual de 22000€/14 pagas = 1571,43€, pero como es a media jornada sería la mitad. Por lo que el sueldo mensual percibido corresponde a un total de 787,71€. El coste anual sería de 787,71€ X 12 meses = 9428,57€.
+
+\subsubsection{Otros Costes}
+En este apartado se incluyen gastos extras que han aparecido a lo largo de la realización del proyecto.
+\begin{itemize}
+    \item 3 Pendrives entrega: 30€
+\end{itemize}
+Estos gastos se amortizan en un año, por lo que valdrá 30€.
+
+\subsubsection{Coste Total de un año de desarrollo}
+Finalmente vamos a sumar todos los costes para ver cuánto dinero supondría la realización de este proyecto durante un año completo.
+
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{| l | r |}
+		\toprule
+		\textbf{Recurso} & \textbf{Coste Anual} \\ \midrule
+		Windows 10 Pro & 40€\\
+		Portátil &  240€ \\
+            Ratón &  10€ \\
+		Sueldo &  9428,57€\\
+            Pendrives  &  30€\\
+		\midrule
+		\textbf{Total:} &  9748,57€ \\
+		\bottomrule
+	\end{tabular}
+	\caption{Coste anual por recursos.}
+	\label{CostResources}
+\end{table}
+
+Tras realizar los cálculos de gastos, no se ve viable el proyecto en términos económicos, ya que como no se consiga desarrollar un software muy potente y se pueda comercializar a los dueños de viñedos, para que reduzcan el uso de fertilizantes en sus campos, no se ve otra forma de conseguir ya no beneficio económico, sino simplemente cubrir los costes.
 
 \subsection{Viabilidad legal}
+En este apartado se van a revisar las licencias que poseen las diferentes librerías que se han utilizado en el proyecto, en qué consiste cada una, y también se va a explicar qué licencia encaja mejor con las características y finalidad de este proyecto.
 
+\subsubsection{Licencias Software}
+A continuación, se hace una breve descripción de las licencias que usan las librerías y se adjunta una tabla con las diferentes librerías, su versión y su licencia. 
+
+\begin{itemize}
+    \item \textbf{Licencia MIT}: La licencia MIT es una de las licencias de código abierto más permisivas. Permite el uso, modificación y distribución del software sin restricciones, siempre que se mantenga el aviso de derechos de autor original. No proporciona garantías ni responsabilidad a los autores por el uso del software.
+	
+    \item \textbf{Apache License 2.0}: La Apache License 2.0 es otra licencia de código abierto muy utilizada. Al igual que la licencia MIT, permite el uso, modificación y distribución del software de forma gratuita. Sin embargo, requiere mantener los avisos de derechos de autor y licencia tanto en el código original como en las versiones modificadas. También exime a los autores de cualquier responsabilidad o garantía sobre el software.
+	
+    \item \textbf{BSD-3-Clause License}: La BSD-3-Clause License es similar a las anteriores, permitiendo el uso, modificación y distribución del software de forma libre. A diferencia de la Licencia MIT, requiere que se indique si se han realizado cambios al trabajo original. Al igual que las otras, no ofrece garantías y exime a los autores de responsabilidad. Una característica destacada de esta licencia es su compatibilidad con otras licencias de código abierto, como la GPL.
+	
+\end{itemize}
+
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|c|c|}
+\hline \textbf{Librería} &\textbf{Versión} & \textbf{Licencia}\\ 
+\hline hydralit & 1.0.14 &  Apache License 2.0\\
+\hline numpy & 1.26.4 & Licencia BSD modificada\\
+\hline opencv-python-headless & 4.10.0.84 & Apache License 2.0\\
+\hline pandas & 2.2.1 & BSD 3-Clause License\\
+\hline scikit-image & 0.24.0 & BSD 3-Clause License\\
+\hline spectral & 0.23.1 & Licencia MIT\\
+\hline streamlit & 1.36.0 & Apache License 2.0\\
+\hline streamlit\_image\_zoom & 0.0.4 & Licencia MIT\\
+\hline
+\end{tabular}
+\caption{Librerías utilizadas, su versión y la licencia que usan.}
+\label{tab:librerias-licencias}
+\end{table}
+
+Tras analizar las diferentes licencias que utilizan las librerías y conocer sus características, se ha llegado a la conclusión de que la licencia MIT es la más adecuada para el proyecto. Esta elección se basa en que la aplicación se ha desarrollado para apoyar una investigación, y permitir que cualquier persona haga lo que desee con el código, siempre y cuando se cite al autor, facilita la colaboración y las mejoras del proyecto.
 

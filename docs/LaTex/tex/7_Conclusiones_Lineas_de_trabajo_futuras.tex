@@ -1,4 +1,67 @@
 \capitulo{7}{Conclusiones y Líneas de trabajo futuras}
 
-Todo proyecto debe incluir las conclusiones que se derivan de su desarrollo. Éstas pueden ser de diferente índole, dependiendo de la tipología del proyecto, pero normalmente van a estar presentes un conjunto de conclusiones relacionadas con los resultados del proyecto y un conjunto de conclusiones técnicas. 
-Además, resulta muy útil realizar un informe crítico indicando cómo se puede mejorar el proyecto, o cómo se puede continuar trabajando en la línea del proyecto realizado. 
+\section{Conclusiones}
+Tras la realización del proyecto se puede concluir que se han cumplido gran parte de los objetivos marcados al inicio del mismo. La aplicación es capaz de detectar las hojas, las gotas y guardar los datos e imágenes con los resultados. Todo esto se puede hacer tanto de forma individual como por lotes. Además se pueden visualizar los resultados en el editor y comprobar la efectividad de las trinarizaciones, pudiendo también exportar los resultados. Para llegar este resultado han ido surgiendo algunos problemas que se han ido resolviendo a lo largo del desarrollo y que se van a exponer en los siguientes apartados.
+
+\subsection{Sobre la superposición de capas en el editor}
+Un problema que no se ha podido solventar de manera completamente eficaz es el de superponer las diferentes capas en el editor. La idea original como ya se ha comentado, era la de implementar un editor de capas que funcionase tal y cómo lo hace Photoshop, pero no se ha podido desarrollar de forma completa.
+
+Debido a la complejidad de la tarea y a que no se ha conseguido encontrar una librería en Python que implemente esas funciones, la única salida que se ha visto es la utilizar una funcionalidad de OpenCV para conseguir un resultado parecido.
+
+La funcionalidad de OpenCV que se ha usado es la de addWeighted. Lo que hace esta función es fusionar dos imágenes, pero con diferentes transparencias en función del valor que se escoja. Ese valor es el que se modifica en el Slider del editor de imágenes del programa.
+
+Por lo que no se ha conseguido trabajar con capas superpuestas de forma independiente, sino que se ha realizado una fusión de imágenes pero eligiendo el peso de cada una. 
+
+Pero en un intento de asemejarnos a la funcionalidad de Photoshop, se tomó la decisión de que capa inferior siempre feuse opaca, es decir, sin ninguna transparencia, para así implementar algo más o menos parecido.
+
+\subsection{Sobre la exportación de datos}
+Durante el desarrollo del proyecto, no se consideró que durante el despliegue de la aplicación, no sería posible acceder a los directorios del usuario final. Esto impediría guardar los archivos de forma local en las carpetas elegidas por la aplicación. 
+
+Este problema surgió a la hora de desplegar la aplicación como es evidente, y se ha tomado la decisión de que los ficheros resultantes se guarden en la carpeta de descargas que tenga asignada el usuario en su navegador.
+
+No es una solución ideal, ya que cuando se ejecutaba en modo local, al guardarse en diferentes carpetas se conseguía tener los ficheros mejor ordenados. Para solventar este nuevo inconveniente, se ha modificado el nombre de los ficheros resultantes poniendo unas iniciales diferentes para cada tipo de fichero a exportar, facilitando así la localización de cada tipo de fichero exportado.
+
+\subsection{Sobre la carga de imágenes hiperespectrales por lotes}
+Otro gran problema que nos hemos encontrado ha sido la carga de ficheros por lotes, ya que como se ha comentado, en las aplicaciones web modernas no se deja acceder directamente a los directorios del usuario por motivos de seguridad.
+
+La solución que se ha encontrado ha sido la de abrir la carpeta que se quiera trinarizar por lotes y arrastrarla al widget de subida de ficheros, consiguiendo así que se suban todos los archivos de una vez.
+
+El mayor incoveniente de esto es que tiene que cargar cada imagen hiperespectral, con el tiempo de espera que esto conlleva, ya que cada imagen ocupa por lo menos 600 MB. Anteriormente se procesaban directamente desde la carpeta de origen y se guardaban en la carpeta que tú elegías.
+
+Ahora se guardan todas las imágenes trinarizadas en un .zip, algo menos eficiente que con la versión anterior.
+
+\subsection{Sobre el uso de Streamlit}
+La elección de Streamlit como base el desarrollo del proyecto se tomó en las primeras reuniones, dado que al principio se pensó en usar OpenCV para el procesamiento de imágenes, y para mostrar los resultados obtenidos, Streamlit funciona bastante bien. 
+
+Sin embargo, a lo largo del desarrollo se fue pensando en añadir cada vez más funcionalidades a la aplicación, y las herramientas que ofrece Streamlit se me fueron quedando cortas. Un problema que tuve fue el tema de editar los componentes frontend que ofrece Streamlit, ya que directamente no ofrece la opción de editarlos con HTML o CSS. 
+Para sortear estos problemas tuve que inyectar código CSS y HTML usando un elemento externo de Streamlit.
+
+Otra cuestión que me ocurrió fue a la hora de crear una ventana emergente, que por suerte actualizando a la última versión de Streamlit, habían añadido como función beta. Pero el tema de que aún esté en desarrollo y cuestiones tan básicas como una ventana emergente todavía no estuviese implementada es un problema a la hora de desarrollar aplicaciones sobre ella.
+
+En definitiva, si hubiera sabido desde un principio que la sencillez de Streamlit me iba a suponer un problema a la hora de escalar la aplicación, probablemente hubiera optado por su alternativa Flask. Las ventajas de Flask es que se puede escalar mejor, te permite una mayor personalización y que lleva más tiempo en desarrollo, siendo más estable.
+
+
+\section{Líneas de trabajo futuras}
+De cara a continuar con el desarrollo de este proyecto, me gustaría hacer algunas sugerencias mediante las cuáles se podrían mejorar las funcionalidades y capacidades de la aplicación.
+
+\subsection{Detección de gotas con Inteligencia Artificial}
+Mi primera sugerencia sería la adicción de la inteligencia artificial a la hora de detectar las gotas en las hojas. Lo bueno de utilizar inteligencia artificial sería ir entrenando un modelo que se especializara en detectar gotas y, en caso de que no fuesen regulares, como las que se usan en este proyecto, fuese capaz de detectarlas igualmente. 
+
+Uno de los grandes problemas que se nos han planteado es la cuestión de eliminar el ruido a la hora de detectar las gotas. Aunque en este caso contábamos con la ventaja de que las gotas se habían precipitado en un laboratorio usando una plantilla, el problema seguía ahí. 
+La cosa es que cuando se trate de detectar las gotas en un futuro, las gotas serán irregulares, ya que se estará pulverizando todo el viñedo de una vez, no hoja por hoja como en este caso.
+
+De ahí que se plantee el uso de inteligencia artificial, tanto para facilitar la detección de gotas irregulares como para omitir las irregularidades o defectos de las hojas que causan ruido en el resultado final.
+
+\subsection{Mejorar el visualizador de imágenes de capas}
+El visualizador de imágenes que se ha implementado es bastante simple en cuanto a funcionalidades se refiere. Este visualizador te permite principalmente añadir capas, mostrarlas o no, elegir su nivel de transparencia y hacer zoom sobre la imagen resultante.
+
+Lo que se sugiere es añadir la posibilidad de poder mover la capa superior y cambiarla el tamaño. Esto sería para tener la opción de subir imagen de una gota y poder cuadrarla en la imagen de la hoja, para comprobar que coinciden correctamente.
+
+También, se podrían añadir más funcionalidades si se desea, tomando de referencia el conocido editor de imágenes Photoshop.
+
+\subsection{Detectar la cantidad de producto antifúngico que cubre la hoja una vez secadas las gotas}
+La tercera sugerencia para continuar el desarrollo del proyecto consiste en conseguir detectar el cubrimiento de producto antifúngico que dejan las gotas con diferentes concentraciones sobre las hojas de vid una vez secas. Este es un punto fundamental a la hora de reducir el uso de fertilizantes en los viñedos. 
+
+La tarea consistiría en ir a la zona donde se detectó la gota, y usando la imagen de la hoja una vez seca, determinar cuánta superficie de la gota ha sido cubierta por el producto antifúngico. Para ello se debe saber la concentración de producto que se ha aplicado en cada gota, y una vez tenemos esa información ya se podría calcular el porcentaje de cubrimiento de la hoja de vid, y saber de forma concreta cuanto fertilizante está haciendo efecto. 
+
+Esta sería la línea de trabajo principal en un futuro, ya que es el objetivo final que se está buscando con este proyecto de investigación.

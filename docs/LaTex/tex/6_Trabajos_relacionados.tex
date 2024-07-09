@@ -1,3 +1,34 @@
 \capitulo{6}{Trabajos relacionados}
+En este apartado se presentan algunos trabajos y tesis que utilizan el mismo tipo de datos que en este proyecto (imágenes hiperespectrales) y comparten la idea de detectar diferentes características para después poder clasificarlas. Además todos los trabajos y estudios seleccionados tienen relación con la botánica.
 
-Este apartado sería parecido a un estado del arte de una tesis o tesina. En un trabajo final grado no parece obligada su presencia, aunque se puede dejar a juicio del tutor el incluir un pequeño resumen comentado de los trabajos y proyectos ya realizados en el campo del proyecto en curso. 
+\section{Remote sensing of vegetation and crops using hyperspectral imagery and unsupervised learning methods.}
+El objetivo que busca este proyecto es la detección de cultivos y vegetación a partir de unas imágenes hiperespectrales utilizando métodos de entrenamiento tanto supervisados como no. 
+
+\imagen{urs}{Diagrama del proceso de reconocimiento y clasificación basado en EAP y una red tipo inception.}{1}
+
+Como se puede observar en la figura 6.1 esta aplicación tiene varias similitudes con la que se ha desarrollado en este proyecto. Para empezar, se utilizan umbrales (thresholds) para seleccionar las diferentes bandas espectrales. Otro aspecto que tiene este trabajo en común con mi proyecto es la clasificación final en una imagen, dónde se colorea de forma diferente cada tipo de zona detectada en la imagen original. La diferencia es que este trabajo utiliza adicionalmente diferentes redes y modelos no supervisados a la hora de detectar las diferentes características.
+
+Se puede acceder al repositorio del proyecto a través del siguiente enlace:
+\href{https://github.com/davidruizhidalgo/unsupervisedRemoteSensing}{https://github.com/davidruizhidalgo/unsupervisedRemoteSensing}
+
+\section{Hyperspectral image applied to determine quality parameters in leafy vegetables.}
+Esta tesis doctoral~\cite{upm44931} utiliza las imágenes hiperespectrales para otra labor diferente, determinar la calidad de vegetales de hoja y su nivel de frescura. 
+
+La primera tarea que se llevó a cabo fue la de tomar diferentes fotografías hiperespectrales de hojas de espinacas, berros y lechugas a lo largo de 21 días, mientras estaban conservadas a 4ºC en un ambiente refrigerado. 
+
+\imagen{berros}{Imagen con la puntuación de dos hojas de berros a lo largo de 5 días de pruebas.}{.7}
+
+La segunda tarea fue procesar esas imágenes, en función de la reflectancia y otros parámetros, y clasificar el nivel de frescura de esos alimentos. Para esa clasificación se usaron diferentes modelos. Finalmente, se pudo concluir que este método tiene mucho potencial, ya que permite clasificar la calidad de los alimentos frescos sin destruirlos ni sacarlos de su envase.
+
+
+\section{PlantCV: Plant phenotyping using computer vision}
+Por último, vamos a explicar PlantCV, una librería de Python basada en OpenCV, capaz de detectar el fenotipo de la plantas. Este software de análisis de imágenes utiliza diferentes técnicas a partir de una gran variedad de algoritmos y paquetes. Al poseer una arquitectura modular, se pueden añadir nuevos métodos de forma rápida y sencilla.
+
+Esta librería tiene relación con el proyecto sobretodo a la hora de detección de hojas, ya que es su principal funcionalidad. Sin embargo, en este proyecto se detecta el contorno de la hoja únicamente para detectar las gotas posteriormente, no porque la forma de la hoja sea algo relevante a la hora de extraer la información que nos interesa.
+
+Se puede acceder al repositorio de la librería a través del siguiente enlace:
+\href{https://github.com/danforthcenter/plantcv}{https://github.com/danforthcenter/plantcv}
+
+
+
+

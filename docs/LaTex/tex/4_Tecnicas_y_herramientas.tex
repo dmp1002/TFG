@@ -1,6 +1,61 @@
 \capitulo{4}{Técnicas y herramientas}
+En este apartado se detallan las técnicas y herramientas utilizadas a lo largo del desarrollo del proyecto. Para cada una de ellas se realizará un pequeño resumen de sus características y los motivos de por qué se han elegido en cada caso respecto a sus alternativas.
 
-Esta parte de la memoria tiene como objetivo presentar las técnicas metodológicas y las herramientas de desarrollo que se han utilizado para llevar a cabo el proyecto. Si se han estudiado diferentes alternativas de metodologías, herramientas, bibliotecas se puede hacer un resumen de los aspectos más destacados de cada alternativa, incluyendo comparativas entre las distintas opciones y una justificación de las elecciones realizadas. 
-No se pretende que este apartado se convierta en un capítulo de un libro dedicado a cada una de las alternativas, sino comentar los aspectos más destacados de cada opción, con un repaso somero a los fundamentos esenciales y referencias bibliográficas para que el lector pueda ampliar su conocimiento sobre el tema.
 
+\section{Aplicaciones y Servicios}
+\subsection{Zube}
+Zube~\cite{zube} es una plataforma de gestión de proyectos que combina un tablero Kanban y los Sprints de la metodología Scrum, proporcionando una solución integral para equipos que buscan administrar sus proyectos de manera ágil. Se ha elegido sobre ZenHub, siendo más famoso y su principal competidor porque ahora es de pago. Las funciones que ofrece Zube respecto a ZenHub son similares, así no ha supuesto una gran diferencia. Zube además te permite la opción de conectarte con GitHub, pudiendo crear y administrar los milestones e issues directamente desde su plataforma. Además, al poseer un tablero Kanban y hacer uso de Sprints es mucho más visual y fácil de administrar el proyecto que si se hiciera directamente desde GitHub.
+
+\subsection{GitHub}
+GitHub~\cite{github} es una plataforma que permite alojar y gestionar repositorios de código utilizando el sistema de control de versiones Git. Se ha elegido por ser la opción más conocida y ampliamente usada. Para realizar los diferentes commits en nuestro repositorio se ha usado el cliente de git, utilizando la opción de consola y usando los comandos. El uso de GitHub o similares hoy en día es algo esencial a la hora de realizar cualquier desarrollo de software.
+
+\subsection{Visual Studio Code}
+Visual Studio Code (VSCode)~\cite{vscode} es un editor de código fuente desarrollado por Microsoft. Es bastante potente, ligero y se puede personalizar y mejorar con las diferentes extensiones que va creando la comunidad. Te permite usar una gran variedad de lenguajes de programación, depurar el código directamente desde el editor y además tiene integración directa con GitHub. Aunque en nuestro caso no se ha usado esta opción, ya que como se ha comentado previamente se ha usado el cliente de Git para realizar los commits. Se ha elegido esta opción respecto a otras como Pycharm o Jupyter Notebook debido a la familarización con el programa, ya que lo he usado en algunas asignaturas de la carrera y me ha gustado como funciona. Además, al ser uno de los editores de código más usados si surgiera algún problema me resultaría más fácil de resolver, ya que otro usuario podría haberlo resuelto previamente.
+
+
+\subsection{Overleaf}
+Overleaf~\cite{overleaf} es una plataforma de escritura y colaboración en línea para crear documentos LaTeX. Es bastante conocido en la comunidad académica, ya que bastante gente lo usa para editar sus documentos científicos o de investigación. Algunas características interesantes por lo que se ha elegido esta plataforma de edición de documentos LaTeX es la capacidad de compartir el proyecto con el tutor y que pueda ir revisando la documentación a lo largo de su desarrollo. Otra característica muy útil es la posibilidad de ir compilando el código para poder ir viendo como va quedando el documento. Pero no todo son cosas buenas, ya que la opción de enlazarlo con GitHub que poseía previamente se ha vuelto de pago, por lo que me he visto obligado a descargar el proyecto y subir al repositorio haciendo un commit con el cliente Git de forma local.
+A pesar de esta desventaja seguiría recomendando su uso, y si se usa con mucha asiduidad, incluso plantearse pagar la versión premium.
+
+\subsection{ChatGPT}
+El famoso ChatGPT~\cite{chatGPT} es un modelo de inteligencia artificial desarrollado por la empresa OpenAI. Su principal función es la de generar texto a partir de una orden que tú le mandes. El uso que se le ha dado en la realización de este proyecto ha sido la de resolver alguna duda que iba surgiendo a lo largo del desarrollo y para poder detectar algún error de programación.
+
+Es una herramienta muy útil para tareas sencillas y te ahorra el tiempo de tener que navegar por las páginas para buscar cierta información, ya que al estar entrenado con millones de datos esas cuestiones sencillas te las resuelve sin problema. Sin embargo, para un trabajo más preciso o más complejo no es recomendable su uso, ya que muchas veces se inventa la información con tal de satisfacer tu petición, aparte de que no te referencia el origen de donde saca esa información.
+
+\subsection{Docker}
+Docker~\cite{docker} es un software que automatiza el proceso de desplegar aplicaciones, creando un contenedor donde se incluyen las dependencias y el contenido de la aplicación, y gracias a esto se puede ejecutar en cualquier servidor Linux.
+
+En este proyecto se ha utilizado Docker para el despliegue de la aplicación. Gracias a estos contenedores, el usuario que quiere ejecutar la aplicación se ahorra todo el trabajo de bajarse el proyecto del repositorio, instalar las dependencias y demás tareas. Me parece una solución ideal para poder ejecutar diferentes aplicaciones de forma fácil y rápida en entornos que utilizan Linux.
+
+\section{Lenguajes de programación}
+\subsection{Python}
+Python~\cite{wiki:Python} es un lenguaje programación de alto nivel, interpretado y de propósito general. Se elegido en este caso debido a las librerías que posee y el tipo de proyecto que se iba a desarrollar, ya que es común utilizar Python para el desarrollo de aplicaciones web. Además, al haberlo utilizado en varias asignaturas a lo largo de la carrera me pareció una buena elección.
+
+\subsection{CSS}
+CSS(Cascading Style Sheets)~\cite{wiki:CSS} es un lenguaje de diseño gráfico que se usa comúnmente junto al lenguaje HTML, y sirve para dar estilo y formato a las páginas web, documentos o interfaces que se creen con un lenguaje de estilo marcado.
+Su uso en este proyecto ha sido algo anecdótico, ya que sólo se ha usado para modificar el aspecto de algunos elementos que vienen integrados en la librería \textit{Streamlit}.
+\subsection{XML}
+XML(Extensible Markup Language)~\cite{wiki:XML} es un lenguaje marcado que define reglas para codificar un documento y que sea legible tanto por humanos como por máquinas. Para lograr todo esto se describe la estructura del contenido usando etiquetas. En este proyecto se utiliza XML para cargar los datos de las bandas de las imágenes hiperespectrales a trinarizar, es decir, estos datos se cargan desde un fichero XML.
+
+\section{Librerías}
+\subsection{Streamlit}
+Streamlit~\cite{streamlit} es un framework de Python que permite la creación de aplicaciones web interactivas para la visualización de datos de forma rápida y sencilla, aunque se pueden realizar tareas más complejas en ella. Gracias a esta herramienta he sido capaz de crear una aplicación interactiva y con un buen diseño. Para poder usar este framework es necesario importar su librería en el proyecto.
+
+\subsection{Spectral}
+Spectral Python (SPy)~\cite{spectral} es una biblioteca de Python diseñada para trabajar con datos de imágenes hiperespectrales. Permite la lectura, el análisis y la visualización de estos datos. Las imágenes hiperespectrales contienen información detallada a través de un amplio rango del espectro electromagnético, lo que las hace útiles en aplicaciones que van desde la teledetección y la agricultura de precisión hasta la detección de anomalías y la clasificación de materiales. SPy soporta varios formatos de archivo hiperespectral y proporciona herramientas para manipular y analizar estos datos de manera eficiente.
+
+\subsection{OpenCV}
+OpenCV (Open Source Computer Vision Library)~\cite{openCV} es una biblioteca de software de código abierto enfocada en la visión artificial y el aprendizaje automático. Incluye una amplia variedad de funciones para el procesamiento de imágenes y videos. OpenCV es ampliamente utilizado en aplicaciones como el reconocimiento facial, la detección de objetos, la realidad aumentada y el análisis de movimiento. En este proyecto su uso principal ha sido el procesamiento de imágenes con el uso de técnicas como la binarización, la normalización de valores, erosionar y dilatar objetos o rellenar espacios cerrados en las diferentes máscaras usadas.
+
+\subsection{Numpy}
+Numpy~\cite{numpy} es una de las librerías más usadas y conocidas de Python. Se usa principalmente para el trabajar con datos numéricos y permite trabajar con grandes volúmenes de datos. Permite crear arrays, usar funciones matemáticas y lógicas, generar números y un largo etcétera de funcionalidades más. En este proyecto se ha usado para cambiar el formato de los datos, crear arrays de llenos de ceros, comparar datos o leer datos del buffer. Es una librería muy útil y polivalente, de ahí que sea tan común su uso.
+
+\subsection{Pandas}
+Pandas~\cite{pandas} es otra de las librerías más utilizadas de Python. Esta librería proporciona estructuras de datos como los conocidos dataframes o series de datos, permite leer,escribir o modificar datos, etc. Normalmente los datos trabajados con Pandas se analizan o visualizan con otras librerías gráficas. En este proyecto se utiliza el dataframe para almacenar los porcentajes calculados durante la trinarización y que posteriormente se guardan en un archivo .csv.
+
+\subsection{SKimage}
+La librería SKimage o Scikit-Image~\cite{skimage} ofrece una colección de algoritmos para poder procesar imágenes. En este proyecto se ha utilizado para eliminar ruido a la hora de detectar las gotas, midiendo y eliminando aquellas regiones que fueran superiores o inferiores a unos valores fijados.
+
+\subsection{streamlit\_image\_zoom}
+La librería streamlit\_image\_zoom~\cite{stimagezoom} se ha usado en el proyecto para añadir la funcionalidad de hacer zoom a la imagen resultante en la pestaña Visualizar de la aplicación. Principalmente, te permite hacer zoom con la rueda del ratón y también tiene la opción de desplazarte por la imagen usando el cursor.
 

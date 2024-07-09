@@ -1,3 +1,30 @@
 \capitulo{2}{Objetivos del proyecto}
 
 Este apartado explica de forma precisa y concisa cuales son los objetivos que se persiguen con la realización del proyecto. Se puede distinguir entre los objetivos marcados por los requisitos del software a construir y los objetivos de carácter técnico que plantea a la hora de llevar a la práctica el proyecto.
+
+\section {Objetivos Generales}
+\begin{enumerate}
+    \item Poder procesar las imágenes hiperespectrales de las hojas de vid con la aplicación en gotas de diferentes productos antifúngicos con base de cobre y azufre, teniendo cada gota una concentración diferente del producto.
+    \item Poder extraer información de estas imágenes hiperespectrales. Principalmente conocer píxel por píxel si se trata de hoja(01), fondo(00) o gota(10) con producto antifúngico. A esta asignación a cada píxel de uno de los tres valores se ha denominado Trinarización. Después esta información se guarda en un fichero .csv. Lo siguiente es la creación de  una imagen pintando cada valor de la trinarización de un color diferente, generándose la imagen trinarizada. Finalmente, se crea otro archivo .csv, este contiene el porcentaje de hoja que hay en la imagen y el porcentaje de gotas con producto que hay en la hoja de vid.
+\end{enumerate}
+
+\section {Objetivos Técnicos} 
+\begin{enumerate}
+    \item Crear un programa con tres pestañas diferentes, una para procesar los datos de una imagen trinarizada que se ha cargado, otra que procesa las imagenes por lotes y finalmente, otra pestaña que permite visualizar los resultados en editor por capas tipo Photoshop.
+    \item Permitir subir las imágenes hiperespectrales tanto de forma individual cómo por lotes.
+    \item Crear un editor que permite seleccionar capas, editarlas(cambiar la transparencia) y guardar el resultado.
+    \item Seleccionar los datos (bandas espectrales, umbral para aplicar la binarización, etc.) para procesar la imagen hiperespectral, y conseguir la deseada trinarización de los píxeles explicada previamente.
+    \item Cargar las trinarizaciones en una lista para poder visualizarlas en el editor.
+    \item Exportar el resultado de la trinarización tanto en formato imagen como en una tabla .csv.
+    \item Exportar el porcentaje de cubrimiento de las gotas sobre la hoja de vid y el porcentaje de hoja que hay en la imagen en una tabla .csv.
+    \item Aplicar la trinarización a varias imágenes a la vez, trabajando por lotes, y guardar los resultados en otra carpeta.
+\end{enumerate}
+
+\section {Objetivos Personales} 
+\begin{enumerate}
+    \item Aprender a desarrollar webs en Python y mejorar en el manejo de este lenguaje de programación.
+    \item Realizar un desarrollo completo de una aplicación desde su inicio hasta su final. Aprender cómo se va evolucionando el código a lo largo del desarrollo.
+    \item Descubrir nuevas librerías de Python o herramientas que me puedan ser útiles en un futuro.
+    \item Aprender a documentar correctamente un proyecto y comprender el funcionamiento de LateX y cómo citar las fuentes.
+    \item Mejorar en la resolución de los errores que van surgiendo mientras que se va desarrollando la aplicación.
+\end{enumerate}

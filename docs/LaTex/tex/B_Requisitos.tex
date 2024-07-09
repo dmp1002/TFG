@@ -1,21 +1,148 @@
 \apendice{Especificación de Requisitos}
 
 \section{Introducción}
+En esta sección se va a realizar una descripción del sistema software a desarrollar. Para ello se han creado tres apartados:
+\begin{itemize}
+    \item El primero describe los objetivos generales del proyecto.
+    \item El segundo muestra un listado de los requisitos funcionales y no funcionales.
+    \item El tercero trata los diferentes casos de uso del sistema software.
+\end{itemize}
 
-Una muestra de cómo podría ser una tabla de casos de uso:
+\section {Objetivos Generales}
+\begin{enumerate}
+    \item Poder procesar las imágenes hiperespectrales de las hojas de vid con la aplicación en gotas de diferentes productos antifúngicos con base de cobre y azufre, teniendo cada gota una concentración diferente del producto.
+    \item Poder extraer información de estas imágenes hiperespectrales. Principalmente conocer píxel por píxel si se trata de hoja(01), fondo(00) o gota(10) con producto antifúngico. A esta asignación a cada píxel de uno de los tres valores se ha denominado Trinarización. Después esta información se guarda en un fichero .csv. Lo siguiente es la creación de  una imagen pintando cada valor de la trinarización de un color diferente, generándose la imagen trinarizada. Finalmente, se crea otro archivo .csv, este contiene el porcentaje de hoja que hay en la imagen y el porcentaje de gotas con producto que hay en la hoja de vid.
+\end{enumerate}
 
-% Caso de Uso 1 -> Consultar Experimentos.
+\section{Catálogo de requisitos}
+Una vez sabemos los objetivos del proyecto vamos a pasar a definir los requisitos: 
+
+\subsection{Requisitos Funcionales}
+Los requisitos funcionales son aquellos que definen que acciones debería poder llevar a cabo la aplicación.
+
+\begin{itemize}
+
+	\item \textbf{RF-1 Carga de datos:}
+		\begin{itemize}
+  			\item \textbf{RF-1.1 Carga de imágenes hiperespectrales:} Permitir al usuario subir archivos de imágenes hiperespectrales en formato .bil y .bil.hdr.
+                \item \textbf{RF-1.2 Carga de imágenes estándar}: Permitir al usuario subir archivos de imágenes estándar en formatos .jpg, .jpeg, .png, .tiff y .tif.
+			\item \textbf{RF-1.3 Carga de imágenes trinarizadas}: Permitir al usuario subir archivos de imágenes que han sido trinarizadas previamente.
+   			\item \textbf{RF-1.4 Carga de imágenes de un directorio origen}: Permitir al usuario seleccionar un directorio de origen para subir múltiples imágenes hiperespectrales de una sola vez.
+         	\item \textbf{RF-1.5 Carga de bandas predeterminadas desde un fichero XML}: Permitir al programa cargar valores predeterminados para seleccionar bandas de una imagen hiperespectral desde un fichero XML.
+		\end{itemize}
+  
+	\item \textbf{RF-2 Configuración de parámetros de procesamiento:}
+    	\begin{itemize}
+    		\item \textbf{RF-2.1 Introducción de nombre para los ficheros resultantes de la trinarización}: Permitir al usuario ingresar el nombre de los archivos resultantes del proceso de trinarización que se vayan a guardar.
+          	\item \textbf{RF-2.2 Introducción del número de banda de la imagen hiperespectral}:  Permitir al usuario ingresar el número de banda específico de la imagen hiperespectral que desea procesar.
+                \item \textbf{RF-2.3 Introducción del rango del umbral para la binarización de las gotas }: Permitir al usuario definir el rango del umbral que se utilizará para binarizar las gotas de producto respecto de la hoja de vid.
+    	\end{itemize}
+     
+	\item \textbf{RF-3 Procesamiento de imágenes:}
+     	\begin{itemize}
+                \item \textbf{RF-3.1 Binarizar hoja:} El programa debe ser capaz de binarizar la hoja respecto al fondo de la imagen.
+                \item \textbf{RF-3.2 Binarizar gotas de la hoja:} El programa debe ser capaz de binarizar las gotas de producto fúngico presentes en la hoja de vid.
+                \item \textbf{RF-3.3 Eliminar ruido de las gotas detectadas:} El programa debe ser capaz de eliminar el ruido de las gotas de producto detectadas en la imagen.
+                \item \textbf{RF-3.4 Crear imagen trinarizada:} El programa debe ser capaz de crear una imagen trinarizada que combine la información de las hojas y las gotas.
+    	\end{itemize}    
+     
+        \item \textbf{RF-4 Visualización de imágenes:}
+            \begin{itemize}
+                \item \textbf{RF-4.1 Añadir capas al visualizador de imágenes:} Permitir al usuario añadir diferentes capas de imágenes al visualizador.
+                \item \textbf{RF-4.2 Eliminar capas del visualizador de imágenes:} Permitir al usuario eliminar capas del visualizador de imágenes.
+                \item \textbf{RF-4.3 Alternar selección de capas en el visualizador de imágenes:} Permitir al usuario seleccionar y deseleccionar las capas en el visualizador.
+                \item \textbf{RF-4.4 Ajustar la transparencia de las capas:} Permitir al usuario ajustar la transparencia de las capas mediante un slider.
+                \item \textbf{RF-4.5 Hacer zoom en la imagen resultante:} Permitir al usuario hacer zoom sobre la imagen visualizada utilizando la rueda del ratón.
+            \end{itemize}
+     
+	\item \textbf{RF-5 Exportación de resultados:}
+    	\begin{itemize}
+    		\item \textbf{RF-5.1 Guardar la imagen en el visualizador}: Permitir al usuario guardar la imagen que ha editado en el visualizador.
+                \item \textbf{RF-5.2 Guardar imagen y archivos .csv en la pestaña trinarizar}: Permitir al usuario guardar la imagen y exportar archivos .csv con los datos generados durante el proceso de trinarización.
+                \item \textbf{RF-5.3 Guardar imagenes trinarizadas en un directorio destino}: Permitir al usuario guardar imágenes trinarizadas por lotes en un directorio especificado.
+                \item \textbf{RF-5.4 Cargar imagen trinarizada en una lista}:  Permitir al usuario cargar la imagen trinarizada generada en una lista para su posterior visualización.
+    	\end{itemize}
+          
+	\item \textbf{RF-6 Interfaz de usuario:}
+    	\begin{itemize}
+                \item \textbf{RF-6.1 Ventana emergente para elegir las nuevas capas:} Proporcionar una ventana emergente para la selección de nuevas capas de imágenes.
+                \item \textbf{RF-6.2 Navegación entre diferentes pestañas:} Permitir al usuario navegar entre las diferentes pestañas del programa.
+                \item \textbf{RF-6.3 Botones para realizar diferentes acciones:} Incluir botones que permitan al usuario realizar distintas acciones de manera dinámica.
+                \item \textbf{RF-6.4 Slider para elegir un rango:} Incluir un slider que permita al usuario seleccionar un rango de valores.
+                \item \textbf{RF-6.5 Barra de carga para mostrar el progreso:} Mostrar una barra de carga que indique el progreso de las operaciones en curso.
+    	\end{itemize}
+
+     
+\end{itemize}
+
+\subsection{Requisitos No Funcionales}
+Los requisitos funcionales son aquellos que definen que acciones debería poder llevar a cabo la aplicación.
+
+\begin{itemize}
+
+	\item \textbf{RNF-1 Rendimiento:} El programa tiene que responder rápido a las peticiones del usuario y no tardar mucho en realizar las operaciones.
+  
+	\item \textbf{RNF-2 Seguridad:} El programa tiene que ser seguro y que su uso no suponga un problema para los usuarios.
+
+     
+	\item \textbf{RNF-3 Privacidad:} El programa debe manejar correctamente los datos de los usuarios y proteger aquellos que sean privados.
+     
+	\item \textbf{RNF-4 Usabilidad:} El programa debe ser intuitivo y fácil de utilizar para que el usuario final sea capaz de aprovechar todas las funcionalidades que ofrece.
+ 
+	\item \textbf{RNF-5 Compatiblidad:} El programa debe ser compatible con el mayor número de navegadores posibles, por no decir que con todos.
+
+ 	\item \textbf{RNF-6 Mantenimiento:} El programa debe ser tener un código bien documentado y modular para facilitar su mantenimiento o de cara a añadir nuevas funcionalidades.
+
+     
+\end{itemize}
+
+\section{Especificación de requisitos}
+En este apartado se han definido los diferentes casos de usos del usuario en la aplicación, creando una tabla para cada uno. Estos son los casos de uso:
+
+% Caso de Uso 1 -> Añadir capas al visualizador.
 \begin{table}[p]
 	\centering
 	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
 		\toprule
-		\textbf{CU-1}    & \textbf{Ejemplo de caso de uso}\\
+		\textbf{CU-1}    & \textbf{Añadir capas al visualizador}\\
 		\toprule
 		\textbf{Versión}              & 1.0    \\
-		\textbf{Autor}                & Alumno \\
-		\textbf{Requisitos asociados} & RF-xx, RF-xx \\
-		\textbf{Descripción}          & La descripción del CU \\
-		\textbf{Precondición}         & Precondiciones (podría haber más de una) \\
+		\textbf{Autor}                & David Merinero Porres \\
+		\textbf{Requisitos asociados} & RF-1, RF-1.1, RF-1.2, RF-1.3, R-2.2, R-4.1, RF-6.1, RF-6.3 \\
+		\textbf{Descripción}          & Permite al usuario añadir capas al visualizador usando diferentes formatos de imagen \\
+		\textbf{Precondición}         & - \\
+		\textbf{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario pulsa el botón de AÑADIR CAPAS.
+			\item El usuario elige en el desplegable el formato de la imagen que va a subir.
+   			\item Si es trinarizada elige una de las imágenes disponibles en un desplegable.
+   			\item El usuario pulsa en el widget para subir la imagen.
+			\item El usuario selecciona la imagen que va a subir.
+			\item Si la imagen es hiperespectral se elige la banda.
+   			\item La imagen se añade a la lista como una nueva capa.
+		\end{enumerate}\\
+		\textbf{Postcondición}        & - \\
+		\textbf{Excepciones}          & - \\
+		\textbf{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-1 Añadir capas al visualizador.}
+\end{table}
+
+% Caso de Uso 2 -> Editar la imagen en el visualizador.
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-2}    & \textbf{Editar la imagen en el visualizador}\\
+		\toprule
+		\textbf{Versión}              & 1.0    \\
+		\textbf{Autor}                & David Merinero Porres \\
+		\textbf{Requisitos asociados} & RF-4, RF-4.1, RF-4.2, RF-4.3, RF-4.4, RF-4.5 \\
+		\textbf{Descripción}          & El usuario puede seleccionar las capas que quiere ver, cambiarlas la transparencia, hacer zoom y añadir o eliminar capas. \\
+		\textbf{Precondición}         & - \\
 		\textbf{Acciones}             &
 		\begin{enumerate}
 			\def\labelenumi{\arabic{enumi}.}
@@ -23,18 +150,264 @@ Una muestra de cómo podría ser una tabla de casos de uso:
 			\item Pasos del CU
 			\item Pasos del CU (añadir tantos como sean necesarios)
 		\end{enumerate}\\
-		\textbf{Postcondición}        & Postcondiciones (podría haber más de una) \\
-		\textbf{Excepciones}          & Excepciones \\
-		\textbf{Importancia}          & Alta o Media o Baja... \\
+		\textbf{Postcondición}        & - \\
+		\textbf{Excepciones}          & - \\
+		\textbf{Importancia}          & Alta \\
 		\bottomrule
 	\end{tabularx}
-	\caption{CU-1 Nombre del caso de uso.}
+	\caption{CU-2 Editar la imagen en el visualizador.}
 \end{table}
 
-\section{Objetivos generales}
+% Caso de Uso 3 -> Eliminar todas las capas del visualizador.
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-3}    & \textbf{Eliminar todas las capas}\\
+		\toprule
+		\textbf{Versión}              & 1.0    \\
+		\textbf{Autor}                & David Merinero Porres \\
+		\textbf{Requisitos asociados} & RF-4.2\\
+		\textbf{Descripción}          & El usuario elimina todas las capas pulsando el botón ELIMINAR TODAS. \\
+		\textbf{Precondición}         & Existencia de capas. \\
+		\textbf{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario pulsa el botón de ELIMINAR TODAS.
+			\item Se eliminan todas las capas disponibles.
+		\end{enumerate}\\
+		\textbf{Postcondición}        & - \\
+		\textbf{Excepciones}          & - \\
+		\textbf{Importancia}          & Baja \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-3 Eliminar todas las capas.}
+\end{table}
 
-\section{Catálogo de requisitos}
+% Caso de Uso 4 -> Hacer zoom en la imagen resultante en el visualizador.
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-4}    & \textbf{Hacer zoom en la imagen resultante}\\
+		\toprule
+		\textbf{Versión}              & 1.0    \\
+		\textbf{Autor}                & David Merinero Porres \\
+		\textbf{Requisitos asociados} & RF-4.5 \\
+		\textbf{Descripción}          & La descripción del CU \\
+		\textbf{Precondición}         & Existencia de al menos una capa seleccionada. \\
+		\textbf{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario pone el cursor encima de la imagen.
+			\item El usuario mueve la rueda del ratón para aumentar o disminuir el zoom de la imagen.
+		\end{enumerate}\\
+		\textbf{Postcondición}        & - \\
+		\textbf{Excepciones}          & - \\
+		\textbf{Importancia}          & Media \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-4 Hacer zoom en la imagen resultante.}
+\end{table}
 
-\section{Especificación de requisitos}
+% Caso de Uso 5 -> Guardar imagen resultante del visualizador.
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-5}    & \textbf{Guardar imagen resultante del visualizador}\\
+		\toprule
+		\textbf{Versión}              & 1.0    \\
+		\textbf{Autor}                & David Merinero Porres \\
+		\textbf{Requisitos asociados} & RF-5.1, RF-6.3 \\
+		\textbf{Descripción}          & El usuario pulsa el botón Guardar imagen para almacenar la imagen que ha editado. \\
+		\textbf{Precondición}         & Existencia de al menos una capa seleccionada. \\
+		\textbf{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario pulsa el botón Guardar imagen
+			\item La imagen se descarga en la memoria del usuario.
+		\end{enumerate}\\
+		\textbf{Postcondición}        & - \\
+		\textbf{Excepciones}          & - \\
+		\textbf{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-5 Guardar imagen resultante del visualizador.}
+\end{table}
 
+% Caso de Uso 6 -> Cargar imagen hiperespectral en trinarizar.
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-6}    & \textbf{Cargar imagen hiperespectral en trinarizar}\\
+		\toprule
+		\textbf{Versión}              & 1.0    \\
+		\textbf{Autor}                & David Merinero Porres \\
+		\textbf{Requisitos asociados} & RF-1.1, RF-6.3 \\
+		\textbf{Descripción}          & Permite al usuario cargar una imagen hiperespectral al programa, pudiendo elegir los ficheros de forma interactiva desde el explorador de archivos. \\
+		\textbf{Precondición}         & - \\
+		\textbf{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario pulsa en el widget de subida de archivos.
+			\item El usuario elige los ficheros de la imagen hiperespectral.
+                \item La imagen hiperespectal queda subida.
+   
+		\end{enumerate}\\
+		\textbf{Postcondición}        & Se permite elegir los parámetros de trinarización. \\
+		\textbf{Excepciones}          & Salta un error si no se suben dos archivos con el mismo nombre y con extensión .bil y .bil.hdr. \\
+		\textbf{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-6 Cargar imagen hiperespectral en trinarizar.}
+\end{table}
 
+% Caso de Uso 7 -> Elegir nombre de los ficheros en trinarizar.
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-7}    & \textbf{Elegir nombre de los ficheros en trinarizar}\\
+		\toprule
+		\textbf{Versión}              & 1.0    \\
+		\textbf{Autor}                & David Merinero Porres \\
+		\textbf{Requisitos asociados} & RF-2.1 \\
+		\textbf{Descripción}          & El usuario introduce el nombre que quiere que tengan los ficheros resultantes en un cuadro de texto. \\
+		\textbf{Precondición}         & - \\
+		\textbf{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario escribe el nombre deseado en el cuadro de texto.
+			\item Al exportar los archivos resultantes tendrán este nombre.
+		\end{enumerate}\\
+		\textbf{Postcondición}        & - \\
+		\textbf{Excepciones}          & - \\
+		\textbf{Importancia}          & Baja \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-7 Elegir nombre de los ficheros en trinarizar.}
+\end{table}
+
+% Caso de Uso 8 -> Elegir parámetros para la trinarización y procesarlos.
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-8}    & \textbf{Elegir parámetros para la trinarización y procesarlos}\\
+		\toprule
+		\textbf{Versión}              & 1.0    \\
+		\textbf{Autor}                & David Merinero Porres \\
+		\textbf{Requisitos asociados} & RF-2.2, RF-2.3, RF-3.1, RF-3.2, RF-3.3, RF-3.4 RF-6.3, RF-6.4 \\
+		\textbf{Descripción}          & Permite al usuario elegir los parámetros para la trinarización y después de pulsar el boton "Procesar imagen", se crea la imagen trinarizada y se muestran los porcentajes. \\
+		\textbf{Precondición}         & Archivos de la imagen hiperespectral subidos previamente. \\
+		\textbf{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario elige la banda para aplicar la primera binarización.
+                \item El usuario elige la banda para aplicar la segunda binarización.
+                \item El usuario elige el umbral para aplicar la segunda binarización.
+                \item El usuario da al botón "Procesar imagen".
+                \item Se crea la imagen trinarizada y se muestran los porcentajes.
+
+		\end{enumerate}\\
+		\textbf{Postcondición}        & Se permite descargar la imagen trinarizada, el fichero .csv con los valores de los píxeles y el fichero .csv con los porcentajes. También se permite cargar la imagen trinarizada en la lista. \\
+		\textbf{Excepciones}          & - \\
+		\textbf{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-8 Elegir parámetros para la trinarización y procesarlos.}
+\end{table}
+
+% Caso de Uso 9 -> Guardar imagen y datos de la trinarización.
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-9}    & \textbf{Guardar imagen y datos de la trinarización}\\
+		\toprule
+		\textbf{Versión}              & 1.0    \\
+		\textbf{Autor}                & David Merinero Porres \\
+		\textbf{Requisitos asociados} & RF-5.2, RF-6.3 \\
+		\textbf{Descripción}          & El usuario pulsa el botón "Descargar imagen trinarizada y csv" y se descargan los ficheros. \\
+		\textbf{Precondición}         & Existencia  de una imagen trinarizada y sus porcentajes. \\
+		\textbf{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario pulsa el botón "Descargar imagen trinarizada y csv".
+                \item Se descargan los ficheros.
+		\end{enumerate}\\
+		\textbf{Postcondición}        & Se dispone de los ficheros en la carpeta descargas del usuario. \\
+		\textbf{Excepciones}          & - \\
+		\textbf{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-9 Guardar imagen y datos de la trinarización.}
+\end{table}
+
+% Caso de Uso 10 -> Cargar imagen trinarizada a la lista.
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-10}    & \textbf{Cargar imagen trinarizada a la lista}\\
+		\toprule
+		\textbf{Versión}              & 1.0    \\
+		\textbf{Autor}                & David Merinero Porres \\
+		\textbf{Requisitos asociados} & RF-5.4, RF-6.3 \\
+		\textbf{Descripción}          & El usuario pulsa el botón "Cargar trinarizada" y la imagen queda cargada en la lista. \\
+		\textbf{Precondición}         &  Existencia  de una imagen trinarizada \\
+		\textbf{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario pulsa el botón "Cargar trinarizada".
+			\item Se carga la imagen trinarizada en la lista.
+		\end{enumerate}\\
+		\textbf{Postcondición}        &  Se dispone de la imagen trinarizada en la lista. \\
+		\textbf{Excepciones}          & - \\
+		\textbf{Importancia}          & Media \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-10 Cargar imagen trinarizada a la lista.}
+\end{table}
+
+% Caso de Uso 11 -> Trinarización por lotes.
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-11}    & \textbf{Trinarización por lotes}\\
+		\toprule
+		\textbf{Versión}              & 1.0    \\
+		\textbf{Autor}                & David Merinero Porres \\
+		\textbf{Requisitos asociados} & RF-1.4, RF-1.5, RF-2.2, RF-2.3, RF-3.1, RF-3.2, RF-3.3, RF-3.4, RF-5.3, RF-6.3, RF-6.4 \\
+		\textbf{Descripción}          & El usuario sube varios ficheros de imáganes hiperespectrales, elige los parámetros de procesamientos y pulsa al botón "Trinarizar por lotes" y se crean las imágenes trinarizadas y se guardan de forma local. \\
+		\textbf{Precondición}         & - \\
+		\textbf{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+   			\item El usuario pulsa en el widget de subida de archivos.
+			\item El usuario elige los ficheros de la imagen hiperespectral.
+			\item El usuario elige la banda para aplicar la primera binarización.
+                \item El usuario elige la banda para aplicar la segunda binarización.
+                \item El usuario elige el umbral para aplicar la segunda binarización.
+                \item El usuario da al botón "Trinarizar por lotes".
+                \item Se crean las imágenes trinarizadas y se guardan de forma local.
+		\end{enumerate}\\
+		\textbf{Postcondición}        & - \\
+		\textbf{Excepciones}          & - \\
+		\textbf{Importancia}          & Media \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-11 Trinarización por lotes.}
+\end{table}

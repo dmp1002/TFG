@@ -1,83 +1,124 @@
 \capitulo{3}{Conceptos teóricos}
 
-En aquellos proyectos que necesiten para su comprensión y desarrollo de unos conceptos teóricos de una determinada materia o de un determinado dominio de conocimiento, debe existir un apartado que sintetice dichos conceptos.
+La tarea principal que se lleva a cabo en este proyecto es la detección de gotas en hojas de viñedo. Para ello se usan unas imágenes hiperespectrales y se aplican una serie de técnicas. Para comprender correctamente el funcionamiento del proyecto es necesario conocer estos conceptos.
 
-Algunos conceptos teóricos de \LaTeX{} \footnote{Créditos a los proyectos de Álvaro López Cantero: Configurador de Presupuestos y Roberto Izquierdo Amo: PLQuiz}.
+\section{Imágenes hiperespectrales}
 
-\section{Secciones}
+\subsection{Definición}
+Una imagen hiperespectral~\cite{wiki:hiper} en un tipo de imagen digital que recopila una gran cantidad de información en amplio rango del espectro electromagnético. Por ejemplo, las imágenes RGB (rojo, verde, azul) únicamente recogen tres bandas del espectro, mientras que este caso, las imágenes hiperespectrales capturan cientos de ellas, que pueden ir desde el ultravioleta hasta el infrarrojo.
 
-Las secciones se incluyen con el comando section.
+\imagen{espectro}{Espectro visible por el ojo humano}{1}
 
-\subsection{Subsecciones}
+\subsection{Obtención de las imágenes hiperespectrales}
+Las imágenes hiperespectrales se pueden obtener usando sensores especializados, que pueden ser aerotransportados, satelitales o terrestres.
+Existen diferentes técnicas diferentes para obtener la información de la imagen hiperespectral:
+\begin{itemize}
+    \item \textbf{Barrido espectral (Spectral Scanning):} También conocido como "pushbroom". En este método, el sensor captura simultáneamente una línea completa de píxeles en una dimensión espacial y en todas las longitudes de onda espectrales, mientras que la plataforma se desplaza en la otra dimensión espacial.
 
-Además de secciones tenemos subsecciones.
-
-\subsubsection{Subsubsecciones}
-
-Y subsecciones. 
-
-
-\section{Referencias}
-
-Las referencias se incluyen en el texto usando cite~\cite{wiki:latex}. Para citar webs, artículos o libros~\cite{koza92}, si se desean citar más de uno en el mismo lugar~\cite{bortolot2005, koza92}.
-
-
-\section{Imágenes}
-
-Se pueden incluir imágenes con los comandos standard de \LaTeX, pero esta plantilla dispone de comandos propios como por ejemplo el siguiente:
-
-\imagen{escudoInfor}{Autómata para una expresión vacía}{.5}
+    \item \textbf{Barrido puntual (Point Scanning):} En esta técnica, el sensor captura datos de un solo punto en cada momento y requiere mover el sensor o el objeto de interés para construir la imagen completa. Este método es menos común debido a su lentitud en comparación con otros métodos de escaneo.
+    
+    \item \textbf{Barrido en plano focal (Focal Plane Array, FPA):} Utiliza detectores que tienen una matriz de elementos sensibles a diferentes longitudes de onda. Este método permite capturar imágenes hiperespectrales completas en un solo instante, haciendo uso de cámaras hiperespectrales que disponen de un sensor bidimensional.
+    
+    \item \textbf{Imágenes instantáneas (Snapshot Imaging):} Este enfoque captura una imagen hiperespectral completa en una sola exposición utilizando dispersión óptica y sensores especiales. Es útil para aplicaciones que requieren alta velocidad de adquisición de datos.
+\end{itemize}
+Lo que se obtiene a partir del uso de estas técnicas es una imagen con tres dimensiones, lo que es comúnmente llamado como hipercubo.
 
 
+\imagen{hiperobtencion}{(a) Configuración básica de una imagen hiperespectral para adquirir una estructura de datos hiperespectrales "hipercubo". El “hipercubo” podría visualizarse como subimágenes 2D individuales I(x,y) en cualquier longitud de onda determinada (b) o como espectros I($\lambda$) en cualquier píxel determinado de la imagen (c).~\cite{MELMASRY201653}}{1}
 
-\section{Listas de items}
+\subsection{Estructura de una imagen hiperespectral}
+En este proyecto se trabajan con una serie de imágenes hiperespectrales extraídas de un dataset disponible en Riubu. Al tratarse de una imagen hiperespectral con 300 bandas tiene un tamaño considerable, ocupando unos 600 Mb cada una. Estas imágenes vienen divididas en dos ficheros, uno con extensión .bil y otro con extensión .bil.hdr El archivo .bil contiene la información y es el fichero que más espacio ocupa, en cambio, el archivo .bil.hdr es una cabecera con información y ocupa unos pocos KB únicamente. 
 
-Existen tres posibilidades:
+La información del archivo .bil.hdr incluye características de la imagen hiperespectral como son las dimensiones (líneas, muestras, bandas), detalles de la captura (tipo de dato, intervalo espectral, velocidad de obturación), características del sensor (número de serie, tamaño de píxel), ajustes de calibración radiométrica y detalles espectrales (longitudes de onda y unidades).
+
+En este proyecto se ha trabajado con imágenes hiperespectrales con una resolución de 1200x900x300, lo que viene siendo un hipercubo. Las 300 bandas espectrales van desde una longitud de onda desde 388 hasta 1024, aumentando 2 ese valor en cada nueva banda aproximadamente. En el proyecto software se da la opción de elegir una banda desde 0 hasta 299, pero el valor de longitud de onda de cada una en realidad se corresponde a lo anteriormente descrito.
+
+
+\subsection{Análisis de las imágenes hiperespectrales}
+El análisis de imágenes hiperespectrales implica varios pasos para extraer y procesar la información contenida en el hipercubo de datos. Una de las primeras tareas es la preprocesamiento de los datos, que puede incluir corrección geométrica de la imagen, eliminación de ruido y normalización de los espectros. Después de esta etapa, se pueden usar diferentes técnicas para interpretar y clasificar los datos. Aquí se citan una serie de posibles técnicas a aplicar:
 
 \begin{itemize}
-	\item primer item.
-	\item segundo item.
+    \item \textbf{Clasificación espectral:} Identificación y categorización de materiales en la imagen basada en sus valores espectrales.
+    \item \textbf{Análisis de componentes principales (PCA):} Reducción del número de dimensiones de los datos para resaltar las características más significativas.
+    \item \textbf{Análisis de mezcla espectral:} Descomposición de los píxeles en función de sus bandas espectrales y tipo de material.
+    \item \textbf{Algoritmos de aprendizaje automático:} Aplicación de técnicas de aprendizaje supervisado y no supervisado para tareas de clasificación y segmentación de los datos.
 \end{itemize}
 
-\begin{enumerate}
-	\item primer item.
-	\item segundo item.
-\end{enumerate}
 
-\begin{description}
-	\item[Primer item] más información sobre el primer item.
-	\item[Segundo item] más información sobre el segundo item.
-\end{description}
-	
+\subsection{Aplicaciones de las imágenes hiperespectrales}
+Las imágenes hiperespectrales se usan en una gran variedad de campos~\cite{hiperapli} y en tareas diferentes que se detallan a continuación:
+
 \begin{itemize}
-\item 
+    \item \textbf{Agricultura:} Monitorización de la salud de los cultivos, detección de plagas y enfermedades, y evaluación del contenido de nutrientes en el suelo.
+    \item \textbf{Medio ambiente:} Evaluación de la calidad del agua, monitorización de la deforestación y gestión de desastres naturales.
+    \item \textbf{Geología:} Identificación y mapeo de minerales y recursos naturales.
+    \item \textbf{Defensa y seguridad:} Detección de camuflaje y materiales peligrosos, vigilancia y reconocimiento.
+    \item \textbf{Medicina:} Detección de tumores y diagnóstico de enfermedades a través de la imagen médica no invasiva.
+    \item \textbf{Industria alimentaria:} Inspección de calidad y seguridad de los alimentos, detección de contaminantes y autenticación de productos.
 \end{itemize}
 
-\section{Tablas}
 
-Igualmente se pueden usar los comandos específicos de \LaTeX o bien usar alguno de los comandos de la plantilla.
+\section{Binarización}
+Para poder discriminar entre lo que es hoja, gota o fondo de la imagen es necesario el uso de la binarización. La binarización se aplica sobre imágenes en escala de grises, que justamente así es como procesamos las bandas de la imagen hiperespectral, al tratarse de valores decimales que en este caso van del 0 al 1. 
 
-\tablaSmall{Herramientas y tecnologías utilizadas en cada parte del proyecto}{l c c c c}{herramientasportipodeuso}
-{ \multicolumn{1}{l}{Herramientas} & App AngularJS & API REST & BD & Memoria \\}{ 
-HTML5 & X & & &\\
-CSS3 & X & & &\\
-BOOTSTRAP & X & & &\\
-JavaScript & X & & &\\
-AngularJS & X & & &\\
-Bower & X & & &\\
-PHP & & X & &\\
-Karma + Jasmine & X & & &\\
-Slim framework & & X & &\\
-Idiorm & & X & &\\
-Composer & & X & &\\
-JSON & X & X & &\\
-PhpStorm & X & X & &\\
-MySQL & & & X &\\
-PhpMyAdmin & & & X &\\
-Git + BitBucket & X & X & X & X\\
-Mik\TeX{} & & & & X\\
-\TeX{}Maker & & & & X\\
-Astah & & & & X\\
-Balsamiq Mockups & X & & &\\
-VersionOne & X & X & X & X\\
-} 
+La binarización consiste en elegir un valor umbral~\cite{thresh} a partir del cuál se convierte la imagen de escala de grises en una imagen binaria o máscara. Los valores superiores al umbral se convierten en 1 y los inferiores en 0, de esta forma consiguiendo así detectar el objeto del fondo, en el caso de que se diferencien claramente. Por suerte, se está trabajando con imágenes de laboratorio sobre un fondo blanco, lo cual facilita más la detección entre la hoja y el fondo. Aunque en este proyecto, hemos utilizado la media de los valores como umbral, para que funcione correctamente con fotos con diferente nivel de luminosidad. 
+
+\imagen{binarizada}{Ejemplo de binarización de una manzana.}{.66}
+
+Posteriormente se realiza una segunda binarización, entre las gotas y la hoja, lo cual es más complejo de discriminar. Por ello, se va a utilizar un rango de valores en vez de un valor umbral a la hora de binarizar entre la hoja y las gotas.
+
+La combinación de estas dos binarizaciones es lo que se ha denominado trinarización.
+
+\section{Normalización}
+Para poder trabajar con las bandas de la imagen hiperespectral como imágenes es necesario pasarlas al formato RGB, donde los valores que hay van del 0 al 255. Sin embargo, los datos que se procesan de cada capa de la imagen hiperespectral son valores con decimales que van del 0 al 1.
+
+
+$$y = \frac{(x - \min(x)) \cdot (valor\_max - valor\_min)}{\max(x) - \min(x)} + valor\_min$$ 
+
+Donde:
+\begin{itemize}
+    \item \textbf{x} es el valor de entrada (Número decimal del 0 al 1).
+    \item \textbf{min(x)} es el valor mínimo de los valores de entrada.
+    \item \textbf{max(x)} es el valor máximo de los valores de entrada.
+    \item \textbf{valor\_min} es el valor mínimo del rango de salida (0).
+    \item \textbf{valor\_max} es el valor máximo del rango de salida (255).
+    \item \textbf{y} es el valor ya normalizado.
+\end{itemize}
+
+ Por eso mismo es necesario aplicar una normalización, es decir, transformar los valores decimales en enteros que vayan de 0 al 255 pero de forma proporcional para no perder información. De esta forma somos capaces de visualizar estas bandas en formato de imagen estándar, en este caso PNG.
+
+ Todo esto se realiza en el proyecto usando esta línea de código:
+ \begin{verbatim}
+    imagen = cv2.normalize(banda, None, 0, 255, 
+    cv2.NORM_MINMAX, dtype=cv2.CV_8U)
+ \end{verbatim}
+
+ Lo que se hace aquí, es aplicar la normalización minmax~\cite{fscaling} de la librería OpenCV, que utiliza la fórmula anteriormente descrita. Además cada valor obtenido se transforma al formato de píxel sin signo de 8 bits (unsigned char), que almacena valores del 0 al 255. Esto también se hace usando la librería OpenCV.
+
+\section{Técnicas de transformación de imágenes}
+OpenCV es una biblioteca de código abierto ampliamente utilizada para el procesamiento de imágenes y visión por computadora. Entre las muchas técnicas que ofrece, las transformaciones morfológicas~\cite{morfo} destacan por su utilidad en la modificación y análisis de estructuras en imágenes binarias, un tipo de imágenes que utilizamos en este proyecto en el proceso de trinarización. Las técnicas más útiles y utilizadas son: erosionar, dilatar, abrir y cerrar. Luego hay más variantes como la función morphologyEx(), que es capaz de combinar algunas de las anteriores para realizar transformaciones morfológicas.
+
+\imagen{base}{Imagen binaria a la que se van a aplicar transformaciones.}{.25}
+
+Ahora se va a pasar a explicar las técnicas que se han utilizado en el proyecto para procesar las imágenes hiperespectrales, y así poder filtrar  por ejemplo, el ruido que se genera al binarizar las gotas de producto fúngico de las hojas de vid. Estas son:
+
+\subsection{Erosión (Erode)}
+La erosión reduce el tamaño de los objetos del primer plano, eliminando los píxeles de los bordes. Esto se logra haciendo que un píxel se considere 1 solo si todos los píxeles debajo del kernel son 1. 
+
+\imagen{erosion}{Imagen binaria después de aplicarle una erosión.}{.25}
+
+Esta transformación se utiliza en el proyecto para reducir el tamaño de las gotas de producto detectadas en las hojas de vid y reducir así el ruido.
+
+\subsection{Dilatación (Dilate)}
+La dilatación es opuesta a la erosión, realizando la acción de aumentar el tamaño de los objetos. 
+
+\imagen{dilation}{Imagen binaria después de aplicarle una dilatación.}{.25}
+
+En este proyecto se han dilatado las gotas para recuperar el tamaño original después de aplicar la erosión.
+
+\subsection{Cierre (MORPH\_CLOSE)}
+El cierre es una transformación que consiste en la dilatación seguida de erosión. Esta operación es útil para cerrar pequeños agujeros dentro de los objetos, es decir, rellenarlos completamente. Es una opción de las varias que ofrece la función morphologyEx().
+
+\imagen{closing}{El antes y el después de aplicar el morphologyEx con la opción de cerrar.}{.5}
+
+En este proyecto se ha usado la transformación morfológica de cierre para conseguir rellenar las gotas de producto antifúngico, ya que el agua reflejaba y algunas gotas no se conseguían cerrar del todo.

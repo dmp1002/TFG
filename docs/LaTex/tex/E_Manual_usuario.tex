@@ -1,11 +1,89 @@
 \apendice{Documentación de usuario}
 
 \section{Introducción}
+En esta sección se explicarán los requisitos necesarios para ejecutar el proyecto, los detalles de cómo instalarlo, y también explicará el funcionamiento del programa.
 
 \section{Requisitos de usuarios}
+Al tratarse de una aplicación web, no se requieren de requisitos muy complejos. A continuación, se adjunta un listado con los requisitos que se deben cumplir:
+\begin{itemize}
+    \tightlist
+    \item Un \textbf{ordenador} que pueda ejecutar un navegador moderno.
+    \item Un \textbf{navegador moderno}, a ser posible con la última versión disponible instalada, ya que debe soportar elementos como HTML5, CSS3, JavaScript, WebSockets o tener las cookies habilitadas. Todos los navegadores más conocidos cumplen estos requisitos, ya sea Chrome, Firefox, Safari, Edge u Opera.
+    \item Sería recomendable el \textbf{acceso a internet} por si se necesitase instalar algún programa o descargar el proyecto del repositorio.
+\end{itemize}
 
 \section{Instalación}
 
+\subsection{Ejecución en local}
+Si se quisiera ejecutar de forma local, sería necesario seguir todos los pasos que se han explicado en el siguiente apartado: \hyperref[sec:compilacion]{Compilación, instalación y ejecución del proyecto} de la documentación técnica de programación.
+
+\subsection{Ejecución con Docker}
+Suponiendo que tenemos Docker ya instalado en el sistema, y que disponemos una imagen Docker comprimida con extensión .tar con el proyecto en su interior. Para ejecutar el proyecto se deben ejecutar los siguientes comandos en la ruta donde se encuentre la imagen Docker:
+
+\begin{verbatim}
+    docker load -i nombre.tar
+\end{verbatim}
+
+En nuestro caso la imagen se llamará vitiscan.
+Con esto se carga la imagen en Docker, ahora sólo nos falta introducir el siguiente comando en la consola para que se ejecute la aplicación:
+
+\begin{verbatim}
+    docker run -p 8501:8501 nombrecontenedor
+\end{verbatim}
+
+En nuestro caso el contenedor se llamará vitiscan.
+La imagen comprimida con extensión .tar se llamará igual que el nombre del contenedor para que no hay confusiones con los nombres.
+
+Finalmente, se deberá abrir un navegador y acceder al siguiente enlace:
+\href{http://localhost:8501/}{http://localhost:8501/}
+
 \section{Manual del usuario}
+Se va a proceder a explicar el funcionamiento de la aplicación, para ello se irá pestaña por pestaña explicando todas las funcionalidades de las que dispone. Las explicaciones se acompañarán de capturas para facilitar su comprensión.
+
+\subsection{Imágenes hiperespectrales}
+Antes de nada se va a explicar los datos que se adjuntan para poder utilizar el programa.
+
+El dataset utilizado se compone de imágenes hiperespectrales de las hojas de viñedo en diferentes formatos y con diferentes tipos de aplicaciones de gotas con antifúngicos.
+Las que se han utilizado en este proyecto principalmente son unas imágenes hiperespectrales de unas hojas de viñedo de tamaño medio y pequeño. Respecto a tipo de aplicación de gotas se han utilizado aquellas con unas dispersión de gotas utilizando una plantilla, es decir, en todas las hojas de vid se ha utilizado la misma plantilla y las gotas están en posiciones parecidas. 
+
+No se adjunta el dataset completo porque ocupa más de 50 GB, por lo que se han seleccionado unas pocas de cada tipo. La hojas también puede ser wet o dry, es decir, con la aplicación de gotas recién echada o cuando se secó y se quedó el compuesto adherido a la superficie. En este proyecto se han utilizado las de tipo wet, ya es donde se pueden apreciar las gotas. Cada imagen hiperespectral se compone de un fichero .bil y de otro fichero bil.hdr, que comparten el mismo nombre. Adicionalmente, hay una foto de la imagen a color en formato .tiff.
+
+Sabiendo esto ya se puede pasar explicar el funcionamiento del programa.
+
+\subsection{Pestaña Visualizar}
+Este es el aspecto de la pestaña visualizar nada más ejecutar el programa:
+\imagen{visu1}{Pestaña visualizar nada más arrancar la aplicación.}{1}
+Tiene un botón para cargar capas y otro para eliminar todas. 
+
+Si se pulsa el botón de añadir capas se abrirá un ventana emergente y te permitirá subir capas en tres formatos diferentes: imágenes hiperespectrales, imágenes estándar y imágenes trinarizadas. Las trinarizadas no están disponibles de momento, porque no se ha creado ninguna todavía.
+\imagen{visu2}{Ventana de añadir capas.}{1}
+Se va a proceder a subir una capa de la imagen hiperespectral, eligiendo la banda 40 en este caso.
+\imagen{visu3}{Pestaña visualizar con una imagen seleccionada}{1}
+Una vez subida se pueden hacer más acciones, como seleccionar la capa, eliminarla o cambiarle la transparencia. Sin embargo, la transparencia no está habilitada para la primera capa, ya que se intenta imitar el funcionamiento de Photoshop.
+\imagen{visu4}{Ventana de añadir capas con la imagen trinarizada cargada.}{1}
+Posteriormente, tras crear una imagen trinarizada en la pestaña Trinarizar, se procede a cargar la imagen trinarizada como otra capa. Entonces la seleccionamos y le cambiamos la transparencia al gusto. Si ponemos el cursor encima de la imagen se podrá hacer zoom sobre ella.
+\imagen{visu5}{Pestaña visualizar con el zoom y la imagen resultante}{1}
+Finalmente guardamos el resultado de la imagen editada por capas pulsando el boton guardar imagen.
 
 
+\subsection{Pestaña Trinarizar}
+En esta pestaña se ve primero un cuadro de texto para introducir el nombre de los ficheros resultantes, un widget para subir una imagen trinarizada y la lista de imágenes trinarizadas que se han cargado en la lista.
+
+\imagen{trina1}{Pestaña trinarizar después de haber subido los ficheros de una imagen hiperespectral.}{1}
+
+Una vez subida la imagen hiperespectral se pide introducir los parámetros para realizar la trinarización. Se piden dos bandas, una para cada binarización y el rango de valores que queremos que se usen para la segunda binarización.
+Los valores de las bandas se cargan de forma predeterminada desde un fichero XML. 
+
+\imagen{trina2}{Resultado de aplicar la trinarización.}{1}
+
+Si pulsamos el botón procesar imagen se generará la imagen trinarizada y los porcentajes de hoja y gota que se han detectado. Finalmente se puede decidir si queremos descargar la imagen trinarizada, el csv con los valores de los pixeles u otro csv con los porcentajes. También está la opción de cargar la imagen trinarizada en la lista, y poder así utilizarla en la pestaña Visualizar directamente, sin tener que subirla de forma manual.
+
+
+\subsection{Pestaña Trinarizar Por Lotes}
+La principal diferencia de esta pestaña respecto a la anterior es la posibilidad de procesar múltiples imágenes hiperespectrales a la vez. 
+
+\imagen{trinalo1}{Pestaña trinarizar por lotes después de cargar varias imágenes hiperespectrales.}{1}
+
+Cuando se cargan las imágenes se piden los parámetros como en la pestaña anterior y le damos al botón procesar imagen nos dará la posibilidad de descargar las imagenes trinarizadas que se han creado dentro de un zip.
+
+\imagen{trinalo2}{Pestaña trinarizar por lotes una vez procesadas las imágenes hiperespectrales y generado las imagenes trinarizadas.}{1}

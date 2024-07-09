@@ -1,3 +1,36 @@
 \capitulo{1}{Introducción}
 
-Descripción del contenido del trabajo y del estructura de la memoria y del resto de materiales entregados.
+Se ha creado una aplicación web con tres apartados: Visualizar, Trinarizar y Trinarizar por lotes. 
+
+El primero nos permite visualizar una imagen en un editor por capas estilo “Photoshop”, donde se permite cargar nuevas capas en diferentes formatos, alternar su visualización, la transparencia de cada capa, eliminar una capa o todas y finalmente poder guardar la imagen resultante.
+
+Por otro lado, la pestaña Trinarizar nos permite subir una imagen en formato hiperespectral, y después se elige la banda para aplicar la primera binarización y detectar la hoja de vid, y la banda y el rango para poder aplicar la segunda binarización para detectar las gotas. Después nos muestra el porcentaje de hoja de vid que hay en la imagen y el porcentaje de gotas que tiene la hoja de vid y nos permite cargar la trinarización en una lista, o exportar la trinarización en formato .png y .csv y los porcentajes en otro .csv.
+
+Finalmente, la pestaña Trinarizar por lotes, que nos permite realizar la trinarización, pero aplicándose a todos las imágenes hiperespectrales que se hayan subido y luego se guardan las imágenes trinarizadas en un .zip.
+
+Ahora se va a pasar a explicar la estructura de la memoria y de los materiales adicionales.
+
+\section{Estructura de la memoria}
+\begin{enumerate}
+    \item \textbf{Introducción}: Descripción del proyecto y estructura de la documentación.
+    \item \textbf{Objetivos del Proyecto}: Objetivos generales, técnicos y personales que se esperan cumplir en este proyecto.
+    \item \textbf{Conceptos Teóricos}: Explicaciones teóricas sobre los conceptos mas relevantes del proyecto.
+    \item \textbf{Técnicas y Herramientas}: Explicación de las técnicas y herramientas que se han usado a lo largo del desarrollo del proyecto.
+    \item \textbf{Aspectos Relevantes del Desarrollo del Proyecto}: Puntos interesantes e importantes que han ido surgiendo a lo largo del desarrollo del proyecto.
+    \item \textbf{Trabajos Relacionados}: Trabajos relacionados con la temática tratada en este proyecto.
+    \item \textbf{Conclusiones y Líneas de Trabajo Futuras}: Las conclusiones que se han extraído de la realización del proyecto y propuestas e ideas de por donde podría seguirse desarrollando este proyecto.
+\end{enumerate}
+
+\section{Estructura de los anexos}
+\begin{enumerate}[A.]
+    \item \textbf{Plan de Proyecto Software}: En este apartado se analiza la planificación temporal y se estudia la viabilidad económica y legal del proyecto.
+    \item \textbf{Especificación de Requisitos}: En esta sección se realiza una descripción del sistema software que se ha desarrollado.
+    \item \textbf{Especificación de Diseño}: En este apartado explica que datos usa la aplicación, su diseño arquitectónico y muestra diferentes diagramas sobre el funcionamiento de la aplicación.
+    \item \textbf{Documentación técnica de programación}: En esta sección se explica la estructura de directorios y archivos que componen el proyecto. También se enseña a crear el entorno de desarrollo que necesita la aplicación en el manual del programador. Además, se detalla paso a paso cómo compilar, instalar y ejecutar la aplicación en diferentes sistemas operativos y utilizando diferentes métodos.
+    \item \textbf{Documentación de Usuario}: En esta sección se explican los requisitos necesarios para ejecutar el proyecto, los detalles de cómo instalarlo, y también explica el funcionamiento del programa.
+    \item \textbf{Anexo de Sostenibilidad Curricular}: En este apartado se realizan unas reflexiones sobre los aspectos de sostenibilidad que se han implementado en el pruyecto.
+\end{enumerate}
+
+\section{Materiales adicionales}
+\subsection{Despliegue con Docker}
+La aplicación aparte de ser ejecutada en modo local haciendo la instalación completa, también se podrá ejecutar dentro de un contenedor Docker.
