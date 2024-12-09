@@ -322,38 +322,40 @@ def trinarizar():
         st.write(df)
         _, buffer_imagen = cv2.imencode('.png', cv2.cvtColor(trinarizada, cv2.COLOR_RGB2BGR))
         imagen_bytes = buffer_imagen.tobytes()
+        csv_porc_str = df.to_csv(index=False)
 
-        alto, ancho, _ = trinarizada.shape
-        output_csv = []
-        with st.spinner("Cargando..."):
-            for x in range(alto):
-                fila = []
-                for y in range(ancho):
-                    color_pixel = trinarizada[x, y]
-                    if np.array_equal(color_pixel, [0, 0, 0]):
-                        valor = '00'
-                    elif np.array_equal(color_pixel, [0, 255, 0]):
-                        valor = '01'
-                    elif np.array_equal(color_pixel, [255, 0, 0]):
-                        valor = '10'
-                    fila.append(valor)
-                output_csv.append(fila)
+        if st.button("Crear CSV trinarizado"):
+            alto, ancho, _ = trinarizada.shape
+            output_csv = []
+            with st.spinner("Cargando..."):
+                for x in range(alto):
+                    fila = []
+                    for y in range(ancho):
+                        color_pixel = trinarizada[x, y]
+                        if np.array_equal(color_pixel, [0, 0, 0]):
+                            valor = '00'
+                        elif np.array_equal(color_pixel, [0, 255, 0]):
+                            valor = '01'
+                        elif np.array_equal(color_pixel, [255, 0, 0]):
+                            valor = '10'
+                        fila.append(valor)
+                    output_csv.append(fila)
 
-            output_csv_str = '\n'.join([','.join(row) for row in output_csv])
-            csv_porc_str = df.to_csv(index=False)
+                output_csv_str = '\n'.join([','.join(row) for row in output_csv])
+
+                st.download_button(
+                    label="Descargar CSV trinarizado",
+                    data=output_csv_str,
+                    file_name=f"TRINACSV_{nombre}_{nombre_hyper}.csv",
+                    mime="text/csv"
+                )
+
 
         st.download_button(
             label="Descargar imagen trinarizada",
             data=imagen_bytes,
             file_name=f"TRINA_{nombre}_{nombre_hyper}.png",
             mime="image/png"
-        )
-
-        st.download_button(
-            label="Descargar CSV trinarizado",
-            data=output_csv_str,
-            file_name=f"TRINACSV_{nombre}_{nombre_hyper}.csv",
-            mime="text/csv"
         )
 
         st.download_button(
